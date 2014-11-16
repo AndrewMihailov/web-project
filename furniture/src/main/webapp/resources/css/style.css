@@ -1,0 +1,43 @@
+@CHARSET "UTF-8";
+
+a {
+	color: red;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	height: 100%;
+	font-family: Verdana;
+}
+
+#wrap {
+	width: 1200px;
+	margin: 0 auto;
+	min-height: 100%;
+    margin-bottom: -70px;
+}
+
+#header {
+	background: #663300;
+}
+
+#content {
+	clear: both;
+}
+
+#footer {
+	width: 1200px;
+	margin: 0 auto;
+	height: 60px;
+	clear: both;
+	background: #663300;
+	color: white;
+	padding-top: 5px;
+	padding-right: 5px;
+	text-align: right;
+	margin-top: 40px;
+}

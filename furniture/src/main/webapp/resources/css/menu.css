@@ -1,0 +1,141 @@
+@CHARSET "UTF-8";
+
+#menu {
+	margin: 0;
+	background: #ffcc66;
+}
+
+#menu ul {
+	background: #ffcc66;
+}
+
+#menu li {
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	position: relative;
+}
+
+#menu li:hover {
+	background: #fb7d00;
+}
+
+#menu a {
+	text-decoration: none;
+	display: block;
+	padding: 10px;
+	color: #663300;
+}
+
+#menu a:hover {
+}
+
+#menu .current {
+	background: #663300;
+	color: #ffcc66;
+}
+
+#menu li > ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 150px;
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 39px;
+}
+
+#menu li:hover ul {
+	display: block;
+}
+
+#menu li  ul li {
+	float: none;
+	height: 30px;
+	margin: 0;
+	width: 150px;
+	text-align: center;
+	background: #ffcc66;
+}
+
+#menu-bottom {
+	text-align: center;
+}
+
+#menu-bottom a {
+	color: white;
+}
+
+#menu-bottom li {
+	display: inline-block;
+	margin: 5px;
+}
+/*
+#menu {
+	padding: 0;
+	margin: 0;
+	background: #ffcc66;
+}
+
+#menu li {
+	list-style: none;
+	float: left;
+	height: 30px;
+	padding: 0;
+	margin: 0;
+	width: 150px;
+	text-align: center;
+	background: #ffcc66;
+	position: relative;
+	padding-top: 12px;
+}
+
+#menu li ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 150px;
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 42px;
+}
+
+#menu li ul li {
+	float: none;
+	height: 30px;
+	margin: 0;
+	width: 150px;
+	text-align: center;
+	background: #ffcc66;
+}
+
+#menu li a {
+	display: block;
+	width: 150px;
+	height: 30px;
+	color: #663300;
+	text-decoration: none;
+}
+
+#menu li:hover ul {
+	display: block;
+}
+
+#menu li:hover {
+	background: #fb7d00;
+}
+
+#menu li ul li ul {
+	left: 150px;
+	top: 0;
+}
+
+#menu li ul li ul li {
+	display: none;
+}
+
+#menu li ul li:hover ul li {
+	display: block;
+}*/

@@ -1,0 +1,46 @@
+@CHARSET "UTF-8";
+
+#slideshow #slidesContainer {
+	/*margin: 0 auto;
+	width: 560px;*/
+	height: 263px;
+	overflow: auto; /* allow scrollbar */
+	position: relative;
+}
+
+#slideshow #slidesContainer .slide {
+	margin: 0 auto;
+	text-align: center;
+	width: 1180px; /* reduce by 20 pixels to avoid horizontal scroll */
+	height: 263px;
+}
+
+#slideshow #slidesContainer .slide img {
+	height: 263px;
+}
+
+/**
+* Правила стилей элементов управления слайдшоу.
+*/
+.control {
+	display: block;
+	width: 128px;
+	height: 128px;
+	text-indent: -10000px;
+	position: absolute;
+	cursor: pointer;
+}
+
+#leftControl, #rightControl {
+	top: 60;
+}
+
+#leftControl {
+	left: 0;
+	background: transparent url(img/control_left.png) no-repeat 0 0;
+}
+
+#rightControl {
+	right: 0;
+	background: transparent url(img/control_right.png) no-repeat 0 0;
+}
