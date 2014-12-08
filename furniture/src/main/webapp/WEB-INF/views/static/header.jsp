@@ -9,10 +9,10 @@
 
 	<ul id="menu">
 		<li><a href="/furniture/">Главная</a></li>
+		<li><a href="/furniture/news">Новости</a></li>
 		<li>
 			<a href="/furniture/">О фабрике</a>
 			<ul>
-				<li><a href="/furniture/">Новости</a></li>
 				<li><a href="/furniture/">Акции</a></li>
 				<li><a href="/furniture/">Документы</a></li>
 				<li><a href="/furniture/">Продукция</a></li>

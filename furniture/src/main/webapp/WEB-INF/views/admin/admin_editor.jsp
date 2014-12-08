@@ -16,17 +16,17 @@
 				<table>
 					<tr>
 						<td>Login</td>
-						<td><input type="text" name="login" /></td>
+						<td><input type="text" name="login" id="login" /></td>
 					</tr>
 					<tr>
 						<td>Password</td>
-						<td><input type="text" name="password" /></td>
+						<td><input type="text" name="password" id="password" /></td>
 					</tr>
 					<tr>
 						<td>Role</td>
 						<td><select name="role">
-								<option value="1">Admin</option>
-								<option value="0">Super admin</option>
+								<option value="ADMIN">Admin</option>
+								<option value="SUPER">Super admin</option>
 						</select></td>
 					</tr>
 				</table>
@@ -49,7 +49,8 @@
 						<td>${iadmin.login}</td>
 						<td>${iadmin.password}</td>
 						<td>${iadmin.role}</td>
-						<td><a>Edit</a> | <a>Delete</a></td>
+						<td><a href="#" onclick="load(${iadmin.id});">Edit</a>
+						| <a href="delete-admin?id=${iadmin.id}">Delete</a></td>
 					</tr>
 				</c:forEach>
 			</table>

@@ -10,27 +10,49 @@
 				<c:if test="${page_id eq 1}">
 					class="current"
 				</c:if>
-				href="/furniture/admin/home">Home</a>
-			<li><a
-				<c:if test="${page_id eq 2}">
+				href="/furniture/admin/home">Home</a></li>
+			<c:if test="${admin_role eq \"SUPER\" }">
+				<li><a
+					<c:if test="${page_id eq 2}">
 					class="current"
 				</c:if>
-				href="/furniture/admin/admin-editor">Admin editor</a>
+					href="/furniture/admin/admin-editor">Admin editor</a></li>
+			</c:if>
 			<li><a
 				<c:if test="${page_id eq 3}">
 					class="current"
 				</c:if>
-				href="/furniture/admin/news-editor">News editor</a>
+				href="/furniture/admin/news-editor">News editor</a></li>
 			<li><a
 				<c:if test="${page_id eq 4}">
 					class="current"
 				</c:if>
-				href="/furniture/admin/offers-editor">Offers editor</a>
+				href="/furniture/admin/offers-editor">Offers editor</a></li>
 			<li><a
 				<c:if test="${page_id eq 5}">
 					class="current"
 				</c:if>
-				href="/furniture/admin/product-editor">Product editor</a>
+				href="/furniture/admin/product-editor">Product editor</a></li>
+			<li><a
+				<c:if test="${page_id eq 6}">
+					class="current"
+				</c:if>
+				href="/furniture/admin/category-editor">Category editor</a></li>
+			<li><a
+				<c:if test="${page_id eq 7}">
+					class="current"
+				</c:if>
+				href="/furniture/admin/designer-editor">Designer editor</a></li>
+			<li><a
+				<c:if test="${page_id eq 8}">
+					class="current"
+				</c:if>
+				href="/furniture/admin/photo-editor">Photo editor</a></li>
+			<li><a
+				<c:if test="${page_id eq 9}">
+					class="current"
+				</c:if>
+				href="/furniture/admin/contact-editor">Contact editor</a></li>
 		</ul>
 	</div>
 

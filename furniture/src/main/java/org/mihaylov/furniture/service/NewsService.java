@@ -8,31 +8,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service("newsService")
 public class NewsService {
 
 	@Autowired
 	private NewsDao newsDao;
 	
 	@Transactional
-	public void addNews(News news) {
-		newsDao.saveNews(news);
+	public void save(News news) {
+		newsDao.save(news);
 	}
 
 	@Transactional
-	public List<News> listNews() {
+	public List<News> list() {
 		return newsDao.list();
 	}
 
 	@Transactional
-	public void removeNews(Integer id) {
+	public void delete(Integer id) {
+		newsDao.delete(newsDao.load(id));
 	}
-
-	public NewsDao getNewsDao() {
-		return newsDao;
-	}
-
-	public void setNewsDao(NewsDao newsDao) {
-		this.newsDao = newsDao;
+	
+	public News get(Integer id) {
+		return newsDao.load(id);
 	}
 }

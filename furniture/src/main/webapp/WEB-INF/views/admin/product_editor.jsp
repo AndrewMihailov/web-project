@@ -15,9 +15,10 @@
 			<form name="product" action="add-product" method="post">
 				<p>Category</p>
 				<p>
-					<select name="category">
-						<option value="1">Category1</option>
-						<option value="0">Category2</option>
+					<select name="category.id">
+						<c:forEach var="icategory" items="${categories}">
+							<option value="${icategory.id}">${icategory.name}</option>
+						</c:forEach>
 					</select>
 				</p>
 				<p>Name</p>
@@ -28,6 +29,15 @@
 				</p>
 				<p>Image</p>
 				<p><input type="file" name="image" /></p>
+				
+				<p>Designer</p>
+				<p>
+					<select name="designer.id">
+						<c:forEach var="idesigner" items="${designers}">
+							<option value="${idesigner.id}">${idesigner.fio}</option>
+						</c:forEach>
+					</select>
+				</p>
 				
 				<input type="submit" value="Add" />
 			</form>
@@ -41,16 +51,21 @@
 					<th>Name</th>
 					<th>Description</th>
 					<th>Image</th>
+					<th>Designer</th>
 					<th>Controls</th>
 				</tr>
-				<tr>
-					<td><input type="checkbox" name="1" /></td>
-					<td>category1</td>
-					<td>Name1</td>
-					<td>Description1</td>
-					<td>image1</td>
-					<td><a>Edit</a> | <a>Delete</a></td>
-				</tr>
+				
+				<c:forEach var="iproduct" items="${products}">
+					<tr>
+						<td><input type="checkbox" name="${iproduct.id}" /></td>
+						<td>${iproduct.category.name}</td>
+						<td>${iproduct.name}</td>
+						<td>${iproduct.description}</td>
+						<td>${iproduct.image}</td>
+						<td>${iproduct.designer.fio}</td>
+						<td><a>Edit</a> | <a href="delete-product?id=${iproduct.id}">Delete</a></td>
+					</tr>
+				</c:forEach>
 			</table>
 
 		</div>

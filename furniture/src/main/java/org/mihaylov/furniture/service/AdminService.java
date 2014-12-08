@@ -2,38 +2,36 @@ package org.mihaylov.furniture.service;
 
 import java.util.List;
 
-import org.mihaylov.furniture.dao.IAdminDao;
+import org.mihaylov.furniture.dao.AdminDao;
 import org.mihaylov.furniture.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-public class AdminService implements IAdminService {
-	
+@Service("adminService")
+public class AdminService {
+
 	@Autowired
-	private IAdminDao adminDao;
-	
+	private AdminDao adminDao;
+
 	@Transactional
-	public void addAdmin(Admin admin) {
-		adminDao.saveAdmin(admin);
+	public void save(Admin admin) {
+		adminDao.save(admin);
 	}
 
 	@Transactional
-	public List<Admin> listAdmin() {
+	public List<Admin> list() {
 		return adminDao.list();
 	}
 
 	@Transactional
-	public void removeAdmin(Integer id) {
+	public void delete(Integer id) {
+		adminDao.delete(adminDao.load(id));
 	}
-
-	public IAdminDao getAdminDao() {
-		return adminDao;
-	}
-
-	public void setAdminDao(IAdminDao adminDao) {
-		this.adminDao = adminDao;
+	
+	@Transactional
+	public Admin get(Integer id) {
+		return adminDao.load(id);
 	}
 
 }

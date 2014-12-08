@@ -6,12 +6,14 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.mihaylov.furniture.dao.AdminDao;
-import org.mihaylov.furniture.dao.IAdminDao;
+import org.mihaylov.furniture.dao.CategoryDao;
+import org.mihaylov.furniture.dao.ContactDao;
+import org.mihaylov.furniture.dao.DesignerDao;
 import org.mihaylov.furniture.dao.NewsDao;
+import org.mihaylov.furniture.dao.OfferDao;
+import org.mihaylov.furniture.dao.PhotoDao;
+import org.mihaylov.furniture.dao.ProductDao;
 import org.mihaylov.furniture.entity.Admin;
-import org.mihaylov.furniture.service.AdminService;
-import org.mihaylov.furniture.service.IAdminService;
-import org.mihaylov.furniture.service.NewsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -25,23 +27,43 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class ApplicationConfiguration {
 
 	@Bean
-	public IAdminService adminService() {
-		return new AdminService();
-	}
-
-	@Bean
-	public IAdminDao adminDao() {
+	public AdminDao adminDao() {
 		return new AdminDao();
 	}
 	
 	@Bean
-	public NewsService newsService() {
-		return new NewsService();
+	public ProductDao productDao() {
+		return new ProductDao();
+	}
+	
+	@Bean
+	public PhotoDao photoDao() {
+		return new PhotoDao();
+	}
+	
+	@Bean
+	public ContactDao contactDao() {
+		return new ContactDao();
+	}
+
+	@Bean
+	public OfferDao offerDao() {
+		return new OfferDao();
 	}
 
 	@Bean
 	public NewsDao newsDao() {
 		return new NewsDao();
+	}
+
+	@Bean
+	public CategoryDao categoryDao() {
+		return new CategoryDao();
+	}
+
+	@Bean
+	public DesignerDao designerDao() {
+		return new DesignerDao();
 	}
 
 	private Properties hibernateProperties() {

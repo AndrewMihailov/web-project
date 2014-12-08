@@ -14,6 +14,7 @@
 
 		<div id="content">
 			<h3>${message}</h3>
+			<p>Your role is ${admin_role}</p>
 		</div>
 	</div>
 </body>

@@ -25,6 +25,9 @@ a {
 #menu li {
 	display: inline-block;
 	margin: 5px;
+	padding: 5px;
+	width: 150px;
+	text-align: center;
 }
 
 #menu li:hover {

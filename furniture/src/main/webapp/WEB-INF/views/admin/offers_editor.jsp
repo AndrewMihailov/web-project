@@ -13,22 +13,30 @@
 		<%@ include file="/WEB-INF/views/admin/static/header.jsp"%>
 		<div id="content">
 			<form name="offer" action="add-offer" method="post">
+				<p>Category</p>
+				<p>
+					<select name="category.id">
+						<c:forEach var="icategory" items="${categories}">
+							<option value="${icategory.id}">${icategory.name}</option>
+						</c:forEach>
+					</select>
+				</p>
+
+				<p>Size</p>
+				<p>
+					<input type="text" name="size" id="size" />
+				</p>
+
 				<p>Preview</p>
 				<p>
-					<textarea rows="5" cols="100" name="prewiev"></textarea>
+					<textarea rows="5" cols="100" name="preview"></textarea>
 				</p>
 
 				<p>Full text</p>
 				<p>
 					<textarea rows="10" cols="100" name="text"></textarea>
 				</p>
-				<p>Category</p>
-				<p>
-					<select name="category">
-						<option value="1">Category1</option>
-						<option value="0">Category2</option>
-					</select>
-				</p>
+
 				<input type="submit" value="Add" />
 			</form>
 
@@ -37,18 +45,23 @@
 			<table class="wide-table">
 				<tr>
 					<th>+</th>
+					<th>Category</th>
+					<th>Size</th>
 					<th>Preview</th>
 					<th>Text</th>
-					<th>Category</th>
 					<th>Controls</th>
 				</tr>
-				<tr>
-					<td><input type="checkbox" name="1" /></td>
-					<td>preview1</td>
-					<td>text1</td>
-					<td>category1</td>
-					<td><a>Edit</a> | <a>Delete</a></td>
-				</tr>
+				<c:forEach var="ioffer" items="${offers}">
+					<tr>
+						<td><input type="checkbox" name="${ioffer.id}" /></td>
+						<td>${ioffer.category.name}</td>
+						<td>${ioffer.size}</td>
+						<td>${ioffer.preview}</td>
+						<td>${ioffer.text}</td>
+						<td><a href="#" onclick="load(${ioffer.id});">Edit</a> | <a
+							href="delete-offer?id=${ioffer.id}">Delete</a></td>
+					</tr>
+				</c:forEach>
 			</table>
 
 		</div>

@@ -1,9 +1,9 @@
 package org.mihaylov.furniture.config;
 
-import javax.sql.DataSource;
-
+import org.mihaylov.furniture.service.AdminUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,31 +18,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests() /* В порядке убывания важности */
 		.antMatchers("/admin/admin-editor", "/admin/add-admin")
-				.access("hasRole('ROLE_SUPER')").antMatchers("/admin/**")
-				.access("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPER')")
+				.access("hasRole('SUPER')").antMatchers("/admin/**")
+				.access("hasRole('ADMIN') or hasRole('SUPER')")
 				.antMatchers("/**").permitAll().and().formLogin()
 				.loginPage("/login").permitAll().and().logout().permitAll()
-				.and().csrf().disable()
-				;
+				.and().csrf().disable();
 	}
 
 	@Configuration
 	protected static class AuthenticationConfiguration extends
 			GlobalAuthenticationConfigurerAdapter {
-
 		@Autowired
-		DataSource dataSource;
-		
+		private AdminUserDetailsService adminUserDetailsService;
+
 		@Override
 		public void init(AuthenticationManagerBuilder auth) throws Exception {
-			auth.inMemoryAuthentication().withUser("admin").password("admin")
-					.roles("ADMIN");
-			auth.inMemoryAuthentication().withUser("super").password("super")
-					.roles("SUPER");
-			// TODO database authentication
-			//auth.jdbcAuthentication().dataSource(dataSource);
+			DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+			daoAuthenticationProvider
+					.setUserDetailsService(adminUserDetailsService);
+			auth.authenticationProvider(daoAuthenticationProvider);
 		}
 
-	}
+		public AdminUserDetailsService getAdminUserDetailsService() {
+			return adminUserDetailsService;
+		}
 
+		public void setAdminUserDetailsService(
+				AdminUserDetailsService adminUserDetailsService) {
+			this.adminUserDetailsService = adminUserDetailsService;
+		}
+	}
 }

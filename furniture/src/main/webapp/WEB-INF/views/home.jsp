@@ -62,15 +62,15 @@
 				</div>
 				<div id="right" class="column">
 					<h2>Акции</h2>
-					<div class="offer">
-						<p class="text">Спеши и торопись!</p>
-					</div>
-					<div class="offer">
-						<p class="text">Спеши и торопись!</p>
-					</div>
-					<div class="offer">
-						<p class="text">Спеши и торопись!</p>
-					</div>
+					
+					<c:forEach var="ioffer" items="${offers}">
+						<div class="offer">
+							<p class="text">${ioffer.preview}</p>
+							<p class="text">
+								Скидки на категорию ${ioffer.category.name} размером ${ioffer.size}%
+							</p>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 

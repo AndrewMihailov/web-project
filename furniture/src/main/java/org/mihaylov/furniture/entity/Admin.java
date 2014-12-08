@@ -4,25 +4,28 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "admin")
+@NamedQueries({ @NamedQuery(name = "findByLogin", query = "from Admin where login=:login") })
 public class Admin {
 
 	@Id
-	@Column(name = "admin_id")
+	@Column(name = "admin_id", unique = true, nullable = false)
 	@GeneratedValue
 	private int id;
 
-	@Column(name = "login")
+	@Column(name = "login", unique = true, nullable = false)
 	private String login;
 
 	@Column(name = "password")
 	private String password;
 
 	@Column(name = "role")
-	private int role;
+	private String role;
 
 	public int getId() {
 		return id;
@@ -48,11 +51,11 @@ public class Admin {
 		this.password = password;
 	}
 
-	public int getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(int role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 
