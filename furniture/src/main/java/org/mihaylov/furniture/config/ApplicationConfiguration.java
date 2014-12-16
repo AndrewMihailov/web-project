@@ -11,6 +11,7 @@ import org.mihaylov.furniture.dao.ContactDao;
 import org.mihaylov.furniture.dao.DesignerDao;
 import org.mihaylov.furniture.dao.NewsDao;
 import org.mihaylov.furniture.dao.OfferDao;
+import org.mihaylov.furniture.dao.OrderDao;
 import org.mihaylov.furniture.dao.PhotoDao;
 import org.mihaylov.furniture.dao.ProductDao;
 import org.mihaylov.furniture.entity.Admin;
@@ -21,6 +22,7 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 @Configuration
 @EnableTransactionManagement
@@ -29,6 +31,11 @@ public class ApplicationConfiguration {
 	@Bean
 	public AdminDao adminDao() {
 		return new AdminDao();
+	}
+	
+	@Bean
+	public OrderDao orderDao() {
+		return new OrderDao();
 	}
 	
 	@Bean
@@ -65,6 +72,11 @@ public class ApplicationConfiguration {
 	public DesignerDao designerDao() {
 		return new DesignerDao();
 	}
+	
+	@Bean
+	public StandardServletMultipartResolver multipartResolver(){
+	    return new StandardServletMultipartResolver();
+	}
 
 	private Properties hibernateProperties() {
 		Properties prop = new Properties();
@@ -72,6 +84,7 @@ public class ApplicationConfiguration {
 		prop.put("hibernate.show_sql", "true");
 		prop.put("hibernate.hbm2ddl.auto", "update");
 		prop.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+		prop.put("javax.persistence.validation.mode", "none");
 		return prop;
 	}
 

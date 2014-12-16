@@ -28,4 +28,14 @@ public class OfferService {
 	public void delete(Integer id) {
 		offerDao.delete(offerDao.load(id));
 	}
+	
+	@Transactional
+	public void update(Offer offer) {
+		offerDao.update(offer);
+	}
+	
+	@Transactional
+	public Offer load(Integer id) {
+		return offerDao.load(id);
+	}
 }

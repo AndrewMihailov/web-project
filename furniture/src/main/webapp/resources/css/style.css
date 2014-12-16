@@ -12,6 +12,7 @@ a {
 html, body {
 	height: 100%;
 	font-family: Verdana;
+	background-color: #f4ecd5;
 }
 
 #wrap {
@@ -19,6 +20,7 @@ html, body {
 	margin: 0 auto;
 	min-height: 100%;
     margin-bottom: -70px;
+    background-color: white;
 }
 
 #header {
@@ -27,6 +29,7 @@ html, body {
 
 #content {
 	clear: both;
+	margin: 10px;
 }
 
 #footer {

@@ -30,8 +30,13 @@ public class AdminService {
 	}
 	
 	@Transactional
-	public Admin get(Integer id) {
+	public Admin load(Integer id) {
 		return adminDao.load(id);
+	}
+	
+	@Transactional
+	public void update(Admin admin) {
+		adminDao.update(admin);
 	}
 
 }

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "contact")
@@ -22,6 +24,8 @@ public class Contact {
 	private String fio;
 
 	@Column(name = "tel_number")
+	@Pattern(regexp="[0-9]*", message="invalid format")
+	@Size(min=6, max=11)
 	private String telNumber;
 	
 	@Column(name = "email")

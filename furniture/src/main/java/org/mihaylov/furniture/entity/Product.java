@@ -21,11 +21,11 @@ public class Product {
 	@GeneratedValue
 	private Integer id;
 
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "category_id")
 	private Category category;
 
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "designer_id")
 	private Designer designer;
 
@@ -35,9 +35,20 @@ public class Product {
 	@Column(name = "description")
 	private String description;
 
+	@Column(name = "price")
+	private Integer price;
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
 	@Column(name = "image")
 	private String image;
-	
+
 	@Override
 	public String toString() {
 		return String.format("%d %s", getId(), getName());

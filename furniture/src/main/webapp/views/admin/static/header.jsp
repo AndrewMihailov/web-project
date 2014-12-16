@@ -6,6 +6,7 @@
 
 	<div id="menu">
 		<ul>
+			<li><a href="/furniture/">To site</a></li>
 			<li><a
 				<c:if test="${page_id eq 1}">
 					class="current"
@@ -60,7 +61,7 @@
 		<h4>
 			${pageContext.request.userPrincipal.name} |
 			<c:url value="/login?logout" var="logoutUrl" />
-			<a href="${logoutUrl}">Log Out</a>
+			<a href="/furniture/logout">Log Out</a>
 		</h4>
 	</c:if>
 

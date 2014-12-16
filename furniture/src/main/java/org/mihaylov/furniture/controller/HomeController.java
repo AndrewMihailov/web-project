@@ -3,7 +3,6 @@ package org.mihaylov.furniture.controller;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
-
 import org.mihaylov.furniture.service.NewsService;
 import org.mihaylov.furniture.service.OfferService;
 import org.slf4j.Logger;
@@ -33,6 +32,7 @@ public class HomeController {
 				DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		logger.info("home page opened at " + formattedDate);
+		logger.info("locale " + locale);
 		
 		ModelAndView model = new ModelAndView("home");
 		model.addObject("news", newsService.list());

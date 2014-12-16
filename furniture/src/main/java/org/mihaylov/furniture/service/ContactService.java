@@ -28,4 +28,14 @@ public class ContactService {
 	public List<Contact> list() {
 		return contactDao.list();
 	}
+	
+	@Transactional
+	public Contact load(Integer id) {
+		return contactDao.load(id);
+	}
+	
+	@Transactional
+	public void update(Contact contact) {
+		contactDao.update(contact);
+	}
 }

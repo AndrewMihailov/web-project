@@ -28,4 +28,14 @@ public class DesignerService {
 	public void delete(Integer id) {
 		designerDao.delete(designerDao.load(id));
 	}
+	
+	@Transactional
+	public void update(Designer designer) {
+		designerDao.update(designer);
+	}
+	
+	@Transactional
+	public Designer load(Integer id) {
+		return designerDao.load(id);
+	}
 }

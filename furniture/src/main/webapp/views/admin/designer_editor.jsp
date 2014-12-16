@@ -4,19 +4,29 @@
 <html>
 <head>
 <title>Admin-panel - Designer-editor</title>
-<%@ include file="/WEB-INF/views/admin/static/head.jsp"%>
+<%@ include file="/views/admin/static/head.jsp"%>
 <c:set var="page_id" scope="session" value="7" />
 </head>
 <body>
 
 	<div id="wrap">
-		<%@ include file="/WEB-INF/views/admin/static/header.jsp"%>
+		<%@ include file="/views/admin/static/header.jsp"%>
 		<div id="content">
-			<form name="designer" action="add-designer" method="post">
+			<c:set var="action" value="add-designer" />
+			<c:if test="${edit}">
+				<c:set var="action" value="edit-designer" />
+			</c:if>
+			<form name="designer" action="${action}" method="post">
+				<c:if test="${edit}">
+					<input hidden="true" name="id" value="${designer.id}" />
+				</c:if>
 				<p>Name</p>
-				<p><input type="text" name="fio" /></p>
+				<p><input type="text" name="fio" value="${designer.fio}" /></p>
 				
 				<input type="submit" value="Add" />
+				<c:if test="${edit}">
+					<a href="designer-editor">Discard</a>
+				</c:if>
 			</form>
 
 			<h3>All designers</h3>
@@ -31,7 +41,7 @@
 					<tr>
 						<td><input type="checkbox" name="${idesigner.id}" /></td>
 						<td>${idesigner.fio}</td>
-						<td><a>Edit</a> | <a href="delete-designer?id=${idesigner.id}">Delete</a></td>
+						<td><a href="designer-editor?id=${idesigner.id}">Edit</a> | <a href="delete-designer?id=${idesigner.id}">Delete</a></td>
 					</tr>
 				</c:forEach>
 			</table>

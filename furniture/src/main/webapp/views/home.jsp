@@ -4,12 +4,12 @@
 <html>
 <head>
 <title>Furniture - Home</title>
-<%@ include file="/WEB-INF/views/static/head.jsp"%>
+<%@ include file="/views/static/head.jsp"%>
 </head>
 <body>
 
 	<div id="wrap">
-		<%@ include file="/WEB-INF/views/static/header.jsp"%>
+		<%@ include file="/views/static/header.jsp"%>
 		<div id="content">
 
 			<div id="slideshow">
@@ -33,7 +33,7 @@
 				<div id="center" class="column">
 					<h2>Последние новости</h2>
 					<c:forEach var="inews" items="${news}">
-						<div class="news">
+						<div class="news-col">
 							<p class="date">
 								<c:choose>
 									<c:when test="${inews.date ne null}">${inews.date}</c:when>
@@ -77,7 +77,7 @@
 		</div>
 
 	</div>
-	<%@ include file="/WEB-INF/views/static/footer.jsp"%>
+	<%@ include file="/views/static/footer.jsp"%>
 
 </body>
 </html>

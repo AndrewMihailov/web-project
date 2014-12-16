@@ -4,19 +4,29 @@
 <html>
 <head>
 <title>Admin-panel - Category-editor</title>
-<%@ include file="/WEB-INF/views/admin/static/head.jsp"%>
+<%@ include file="/views/admin/static/head.jsp"%>
 <c:set var="page_id" scope="session" value="6" />
 </head>
 <body>
 
 	<div id="wrap">
-		<%@ include file="/WEB-INF/views/admin/static/header.jsp"%>
+		<%@ include file="/views/admin/static/header.jsp"%>
 		<div id="content">
-			<form name="category" action="add-category" method="post">
+			<c:set var="action" value="add-category" />
+			<c:if test="${edit}">
+				<c:set var="action" value="edit-category" />
+			</c:if>
+			<form name="category" action="${action}" method="post">
+				<c:if test="${edit}">
+					<input hidden="true" name="id" value="${category.id}" />
+				</c:if>
 				<p>Name</p>
-				<p><input type="text" name="name" /></p>
+				<p><input type="text" name="name" value="${category.name}" /></p>
 				
 				<input type="submit" value="Add" />
+				<c:if test="${edit}">
+					<a href="category-editor">Discard</a>
+				</c:if>
 			</form>
 
 			<h3>All categories</h3>
@@ -31,7 +41,7 @@
 					<tr>
 						<td><input type="checkbox" name="${icategory.id}" /></td>
 						<td>${icategory.name}</td>
-						<td><a>Edit</a> | <a href="delete-category?id=${icategory.id}">Delete</a></td>
+						<td><a href="category-editor?id=${icategory.id}">Edit</a> | <a href="delete-category?id=${icategory.id}">Delete</a></td>
 					</tr>
 				</c:forEach>
 			</table>

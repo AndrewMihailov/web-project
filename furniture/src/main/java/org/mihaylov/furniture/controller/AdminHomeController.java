@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdminHomeController extends AdminCommon {
 	
-	@RequestMapping(value = { "/admin", "/admin/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public ModelAndView adminHome() {
 		ModelAndView model = new ModelAndView();
 		model.addObject("message", "Admin home page");

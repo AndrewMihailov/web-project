@@ -4,15 +4,22 @@
 <html>
 <head>
 <title>Admin-panel - Photo-editor</title>
-<%@ include file="/WEB-INF/views/admin/static/head.jsp"%>
+<%@ include file="/views/admin/static/head.jsp"%>
 <c:set var="page_id" scope="session" value="8" />
 </head>
 <body>
 
 	<div id="wrap">
-		<%@ include file="/WEB-INF/views/admin/static/header.jsp"%>
+		<%@ include file="/views/admin/static/header.jsp"%>
 		<div id="content">
-			<form name="photo" action="add-photo" method="post">
+			<c:set var="action" value="add-photo" />
+			<c:if test="${edit}">
+				<c:set var="action" value="edit-photo" />
+			</c:if>
+			<form name="photo" action="${action}" method="post" enctype="multipart/form-data">
+				<c:if test="${edit}">
+					<input hidden="true" name="id" value="${photo.id}" />
+				</c:if>
 				<p>Product</p>
 				<p>
 					<select name="product.id" id="product">
@@ -20,31 +27,35 @@
 							<c:if test="${icategory.value.size() ne 0}">
 								<optgroup label="${icategory.key}">
 									<c:forEach var="iproduct" items="${icategory.value}">
-										<option value="${iproduct.id}">${iproduct.name}</option>
+										<option value="${iproduct.id}" <c:if test="${photo.product.id eq iproduct.id}">selected</c:if> >${iproduct.name}</option>
 									</c:forEach>
 								</optgroup>
 							</c:if>
 						</c:forEach>
 					</select>
 				</p>
-				<p>Image</p>
+				
+				<p>Image <c:if test="${edit}"><input type="checkbox" name="keepimg" />Keep current (newly selected will be ignored)</c:if></p>
 				<p>
-					<input type="file" name="image" />
+					<input type="file" name="image1" value="${photo.image}" />
 				</p>
 				<p>Description</p>
 				<p>
-					<textarea rows="5" cols="100" name="description"></textarea>
+					<textarea rows="5" cols="100" name="description">${photo.description}</textarea>
 				</p>
 				<p>Width</p>
 				<p>
-					<input type="text" name="width" id="width" />
+					<input type="text" name="width" id="width" value="${photo.width}" />
 				</p>
 				<p>Height</p>
 				<p>
-					<input type="text" name="height" id="height" />
+					<input type="text" name="height" id="height" value="${photo.height}" />
 				</p>
 
 				<input type="submit" value="Add" />
+				<c:if test="${edit}">
+					<a href="photo-editor">Discard</a>
+				</c:if>
 			</form>
 
 			<h3>All photos</h3>
@@ -63,11 +74,13 @@
 					<tr>
 						<td><input type="checkbox" name="${iphoto.id}" /></td>
 						<td>${iphoto.product.name}</td>
-						<td>${iphoto.image}</td>
+						<td>
+						<img width="128px" height="128px" src="display-photo-${iphoto.id}.jpg" />
+						</td>
 						<td>${iphoto.description}</td>
 						<td>${iphoto.width}</td>
 						<td>${iphoto.height}</td>
-						<td><a>Edit</a> | <a href="delete-photo?id=${iphoto.id}">Delete</a></td>
+						<td><a href="photo-editor?id=${iphoto.id}">Edit</a> | <a href="delete-photo?id=${iphoto.id}">Delete</a></td>
 					</tr>
 				</c:forEach>
 			</table>

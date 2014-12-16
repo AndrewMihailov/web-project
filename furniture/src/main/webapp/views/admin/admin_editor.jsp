@@ -4,33 +4,43 @@
 <html>
 <head>
 <title>Admin-panel - Admin-editor</title>
-<%@ include file="/WEB-INF/views/admin/static/head.jsp"%>
+<%@ include file="/views/admin/static/head.jsp"%>
 <c:set var="page_id" scope="session" value="2" />
 </head>
 <body>
 
 	<div id="wrap">
-		<%@ include file="/WEB-INF/views/admin/static/header.jsp"%>
+		<%@ include file="/views/admin/static/header.jsp"%>
 		<div id="content">
-			<form name="admin" action="add-admin" method="post">
+			<c:set var="action" value="add-admin" />
+			<c:if test="${edit}">
+				<c:set var="action" value="edit-admin" />
+			</c:if>
+			<form name="admin" action="${action}" method="post">
+				<c:if test="${edit}">
+					<input hidden="true" name="id" value="${admin.id}" />
+				</c:if>
 				<table>
 					<tr>
 						<td>Login</td>
-						<td><input type="text" name="login" id="login" /></td>
+						<td><input type="text" name="login" id="login" value="${admin.login}" /></td>
 					</tr>
 					<tr>
 						<td>Password</td>
-						<td><input type="text" name="password" id="password" /></td>
+						<td><input type="text" name="password" id="password" value="${admin.password}" /></td>
 					</tr>
 					<tr>
 						<td>Role</td>
 						<td><select name="role">
-								<option value="ADMIN">Admin</option>
-								<option value="SUPER">Super admin</option>
+								<option value="ADMIN" <c:if test="${admin.role eq \"ADMIN\"}">selected</c:if> >Admin</option>
+								<option value="SUPER" <c:if test="${admin.role eq \"SUPER\"}">selected</c:if> >Super admin</option>
 						</select></td>
 					</tr>
 				</table>
 				<input type="submit" value="Add" />
+				<c:if test="${edit}">
+					<a href="admin-editor">Discard</a>
+				</c:if>
 			</form>
 
 			<h3>All users</h3>
@@ -49,7 +59,7 @@
 						<td>${iadmin.login}</td>
 						<td>${iadmin.password}</td>
 						<td>${iadmin.role}</td>
-						<td><a href="#" onclick="load(${iadmin.id});">Edit</a>
+						<td><a href="admin-editor?id=${iadmin.id}">Edit</a>
 						| <a href="delete-admin?id=${iadmin.id}">Delete</a></td>
 					</tr>
 				</c:forEach>

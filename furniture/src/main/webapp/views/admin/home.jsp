@@ -4,13 +4,13 @@
 <html>
 <head>
 <title>Admin-panel - Home</title>
-<%@ include file="/WEB-INF/views/admin/static/head.jsp"%>
+<%@ include file="/views/admin/static/head.jsp"%>
 <c:set var="page_id" scope="session" value="1" />
 </head>
 <body>
 
 	<div id="wrap">
-		<%@ include file="/WEB-INF/views/admin/static/header.jsp"%>
+		<%@ include file="/views/admin/static/header.jsp"%>
 
 		<div id="content">
 			<h3>${message}</h3>

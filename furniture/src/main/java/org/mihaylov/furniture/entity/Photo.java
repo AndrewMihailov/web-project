@@ -7,10 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "photo")
+@NamedQueries({ @NamedQuery(name = "searchByProductId", query = "select p from Photo p join p.product pr where pr.id = :productId") })
 public class Photo {
 
 	@Id
@@ -43,6 +47,7 @@ public class Photo {
 	}
 
 	public String getImage() {
+		//return org.springframework.security.crypto.codec.Base64.encode(image);
 		return image;
 	}
 

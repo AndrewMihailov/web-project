@@ -28,4 +28,14 @@ public class CategoryService {
 	public void delete(Integer id) {
 		categoryDao.delete(categoryDao.load(id));
 	}
+	
+	@Transactional
+	public void update(Category category) {
+		categoryDao.update(category);
+	}
+	
+	@Transactional
+	public Category load(Integer id) {
+		return categoryDao.load(id);
+	}
 }

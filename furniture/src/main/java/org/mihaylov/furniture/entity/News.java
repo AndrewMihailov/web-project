@@ -6,10 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "news")
+@NamedQueries({ @NamedQuery(name = "selectNewsByLocale", query = "from News n where n.lang = :lang") })
 public class News {
 
 	@Id
@@ -17,15 +21,52 @@ public class News {
 	@GeneratedValue
 	private int id;
 	
+	@Column(name = "lang")
+	private String lang;
+	
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
+
 	@Column(name = "date")
-	@GeneratedValue
 	private Date date;
 	
+	@Column(name= "title")
+	public String title;
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@Column(name = "preview")
 	private String preview;
 	
 	@Column(name = "text")
 	private String text;
+	
+	@Column(name = "image")
+	private String image;
+	
+	@PrePersist
+    protected void onCreate() {
+		date = new Date(new java.util.Date().getTime());
+    }
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	public int getId() {
 		return id;
@@ -40,7 +81,7 @@ public class News {
 	}
 
 	public void setDate(Date date) {
-		this.date = new Date(0);
+		this.date = date;
 	}
 
 	public String getPreview() {
