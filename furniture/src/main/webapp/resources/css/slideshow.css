@@ -1,11 +1,11 @@
 @CHARSET "UTF-8";
 
 #slideshow #slidesContainer {
-	/*margin: 0 auto;
-	width: 560px;*/
+	/* margin: 0 auto;
+	width: 560px;
 	height: 263px;
-	/*overflow: auto;*/ /* allow scrollbar */
-	/* position: relative; */
+	overflow: auto;
+	position: relative;  */
 }
 
 #slideshow #slidesContainer .slide {
@@ -22,28 +22,27 @@
 /**
 * Правила стилей элементов управления слайдшоу.
 */
-.control {
+/*.control {
 	display: block;
 	width: 128px;
 	height: 128px;
 	text-indent: -10000px;
-	/* position: absolute; */
+	position: absolute;
 	cursor: pointer;
 }
 
 #leftControl, #rightControl {
-	/* top: 60; */
+	top: 60;
 	position: relative;
 }
 
 #leftControl {
-	top: 60;
 	left: 0;
 	background: url(img/control_left.png) no-repeat;
 }
 
 #rightControl {
-	top: 60;
 	right: 0;
 	background: url(img/control_right.png) no-repeat;
 }
+*/

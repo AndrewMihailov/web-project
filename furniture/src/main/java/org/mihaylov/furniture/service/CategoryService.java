@@ -1,6 +1,8 @@
 package org.mihaylov.furniture.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mihaylov.furniture.dao.CategoryDao;
 import org.mihaylov.furniture.entity.Category;
@@ -37,5 +39,15 @@ public class CategoryService {
 	@Transactional
 	public Category load(Integer id) {
 		return categoryDao.load(id);
+	}
+	
+	@Transactional
+	public Map<Category, List<Category>> listOrganized() {
+		Map<Category, List<Category>> result = new LinkedHashMap<Category, List<Category>>();
+		List<Category> root = categoryDao.selectRoot();
+		for (Category category : root) {
+			result.put(category, categoryDao.selectByParent(category.getId()));
+		}
+		return result;
 	}
 }

@@ -1,6 +1,7 @@
 package org.mihaylov.furniture.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.mihaylov.furniture.dao.ContactDao;
 import org.mihaylov.furniture.entity.Contact;
@@ -27,6 +28,11 @@ public class ContactService {
 	@Transactional
 	public List<Contact> list() {
 		return contactDao.list();
+	}
+	
+	@Transactional
+	public List<Contact> list(Locale locale) {
+		return contactDao.selectByLocale(locale.toString());
 	}
 	
 	@Transactional

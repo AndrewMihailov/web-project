@@ -29,8 +29,11 @@ public class Photo {
 	@Column(name = "image")
 	private String image;
 
-	@Column(name = "description")
-	private String description;
+	@Column(name = "description_ru")
+	private String descriptionRu;
+	
+	@Column(name = "description_en")
+	private String descriptionEn;
 
 	@Column(name = "width")
 	private Integer width;
@@ -47,20 +50,11 @@ public class Photo {
 	}
 
 	public String getImage() {
-		//return org.springframework.security.crypto.codec.Base64.encode(image);
 		return image;
 	}
 
 	public void setImage(String image) {
 		this.image = image;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public Integer getWidth() {
@@ -85,5 +79,21 @@ public class Photo {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public String getDescriptionRu() {
+		return descriptionRu;
+	}
+
+	public void setDescriptionRu(String descriptionRu) {
+		this.descriptionRu = descriptionRu;
+	}
+
+	public String getDescriptionEn() {
+		return descriptionEn;
+	}
+
+	public void setDescriptionEn(String descriptionEn) {
+		this.descriptionEn = descriptionEn;
 	}
 }

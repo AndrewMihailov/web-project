@@ -5,6 +5,7 @@
 <head>
 <title>Admin-panel - Offers-editor</title>
 <%@ include file="/views/admin/static/head.jsp"%>
+<script src="/furniture/resources/scr/admin/offer.js"></script>
 <c:set var="page_id" scope="session" value="4" />
 </head>
 <body>
@@ -20,11 +21,17 @@
 				<c:if test="${edit}">
 					<input hidden="true" name="id" value="${offer.id}" />
 				</c:if>
+				
+				<p>Language</p>
+				<select name="lang">
+					<option value="ru" <c:if test="${offer.lang eq \"ru\"}">selected</c:if> >RU</option>
+					<option value="en" <c:if test="${offer.lang eq \"en\"}">selected</c:if> >EN</option>
+				</select>
 				<p>Category</p>
 				<p>
 					<select name="category.id">
 						<c:forEach var="icategory" items="${categories}">
-							<option value="${icategory.id}" <c:if test="${offer.category.id eq icategory.id}">selected</c:if> >${icategory.name}</option>
+							<option value="${icategory.id}" <c:if test="${offer.category.id eq icategory.id}">selected</c:if> >${icategory.nameRu} | ${icategory.nameEn}</option>
 						</c:forEach>
 					</select>
 				</p>
@@ -32,11 +39,7 @@
 				<p>Size</p>
 				<p>
 					<input type="text" name="size" id="size" value="${offer.size}" />
-				</p>
-
-				<p>Preview</p>
-				<p>
-					<textarea rows="5" cols="100" name="preview">${offer.preview}</textarea>
+					<span id="size_error" class="error">Must be number</span>
 				</p>
 
 				<p>Full text</p>
@@ -55,18 +58,18 @@
 			<table class="wide-table">
 				<tr>
 					<th>+</th>
+					<th>Lang</th>
 					<th>Category</th>
 					<th>Size</th>
-					<th>Preview</th>
 					<th>Text</th>
 					<th>Controls</th>
 				</tr>
 				<c:forEach var="ioffer" items="${offers}">
 					<tr>
 						<td><input type="checkbox" name="${ioffer.id}" /></td>
-						<td>${ioffer.category.name}</td>
+						<td>${ioffer.lang}</td>
+						<td>${ioffer.category.nameRu} | ${ioffer.category.nameEn}</td>
 						<td>${ioffer.size}</td>
-						<td>${ioffer.preview}</td>
 						<td>${ioffer.text}</td>
 						<td><a href="offers-editor?id=${ioffer.id}">Edit</a> | <a
 							href="delete-offer?id=${ioffer.id}">Delete</a></td>

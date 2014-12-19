@@ -5,6 +5,7 @@
 <head>
 <title>Admin-panel - Contact-editor</title>
 <%@ include file="/views/admin/static/head.jsp"%>
+<script src="/furniture/resources/scr/admin/contact.js"></script>
 <c:set var="page_id" scope="session" value="9" />
 </head>
 <body>
@@ -20,30 +21,28 @@
 				<c:if test="${edit}">
 					<input hidden="true" name="id" value="${contact.id}" />
 				</c:if>
+				<p>Language</p>
+				<input type="text" name="lang" value="${contact.lang}" />
 				<p>Type</p>
-				<p>
-					<input type="text" name="type" id="type" value="${contact.type}" />
-				</p>
+				<input type="text" name="type" id="type" value="${contact.type}" />
+				<span id="type_error" class="error">Required to fill</span>
 				<p>Fio</p>
-				<p>
-					<input type="text" name="fio" id="fio" value="${contact.fio}" />
-				</p>
+				<input type="text" name="fio" id="fio" value="${contact.fio}" />
+				<span id="fio_error" class="error">Required to fill</span>
 				<p>Telephone number</p>
-				<p>
-					<input type="text" name="telNumber" id="telNumber"
-						value="${contact.telNumber}" />
-				</p>
+				<input type="text" name="telNumber" id="telNumber"
+					value="${contact.telNumber}" />
+				<span id="telNumber_error" class="error">Incorrect phone format</span>
 				<p>E-mail</p>
-				<p>
-					<input type="text" name="email" id="email" value="${contact.email}" />
-				</p>
+				<input type="text" name="email" id="email" value="${contact.email}" />
+				<span id="email_error" class="error">Incorrect email format</span>
 				<p>Address</p>
+				<input type="text" name="address" id="address"
+					value="${contact.address}" />
+				<span id="address_error" class="error">Required to fill</span>
 				<p>
-					<input type="text" name="address" id="address"
-						value="${contact.address}" />
+					<input type="submit" value="Add" />
 				</p>
-
-				<input type="submit" value="Add" />
 				<c:if test="${edit}">
 					<a href="contact-editor">Discard</a>
 				</c:if>
@@ -54,6 +53,7 @@
 			<table class="wide-table">
 				<tr>
 					<th>+</th>
+					<th>Lang</th>
 					<th>Type</th>
 					<th>Fio</th>
 					<th>Telephone number</th>
@@ -64,6 +64,7 @@
 				<c:forEach var="icontact" items="${contacts}">
 					<tr>
 						<td><input type="checkbox" name="${icontact.id}" /></td>
+						<td>${icontact.lang}</td>
 						<td>${icontact.type}</td>
 						<td>${icontact.fio}</td>
 						<td>${icontact.telNumber}</td>

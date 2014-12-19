@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class AdminProductsController extends AdminCommon {
+public class AdminProductController extends AdminCommon {
 
 	@Autowired
 	private CategoryService categoryService;
@@ -38,7 +38,7 @@ public class AdminProductsController extends AdminCommon {
 	private ProductService productService;
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(AdminProductsController.class);
+			.getLogger(AdminProductController.class);
 
 	@RequestMapping(value = "/product-editor", method = RequestMethod.GET)
 	public ModelAndView productEditor(@RequestParam(required = false) Integer id) {
@@ -82,17 +82,15 @@ public class AdminProductsController extends AdminCommon {
 
 		if (result.hasErrors()) {
 			// TODO handle errors
-			logger.error("mapping error");
+			logger.error("mapping error <=================================================================");
 			return model;
 		}
 
 		String oldImg = null;
 		if (keepimg != null && keepimg) {
 			oldImg = productService.load(product.getId()).getImage();
-			if (oldImg == null)
-				oldImg = "";
-		} else if (image.isEmpty())
-			return model;
+		} else
+			productService.deleteOldImage(product.getId());
 
 		productService.update(product, image, oldImg);
 		return model;

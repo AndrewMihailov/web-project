@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.mihaylov.furniture.entity.Photo;
+import org.mihaylov.furniture.entity.Product;
+import org.mihaylov.furniture.service.CategoryService;
 import org.mihaylov.furniture.service.PhotoService;
 import org.mihaylov.furniture.service.ProductService;
 import org.slf4j.Logger;
@@ -32,6 +35,9 @@ public class AdminPhotoController extends AdminCommon {
 
 	@Autowired
 	private PhotoService photoService;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(AdminPhotoController.class);
@@ -41,9 +47,10 @@ public class AdminPhotoController extends AdminCommon {
 		ModelAndView model = new ModelAndView("admin/photo_editor");
 		init(model);
 
-		model.addObject("groupedProducts",
-				productService.listGrouppedProducts());
+		/*model.addObject("groupedProducts",
+				productService.listGrouppedProducts());*/
 		model.addObject("photos", photoService.list());
+		model.addObject("categories", categoryService.list());
 
 		if (id != null) {
 			model.addObject("edit", true);
@@ -81,10 +88,12 @@ public class AdminPhotoController extends AdminCommon {
 			logger.error("mapping error");
 			return model;
 		}
+
 		String oldImg = null;
 		if (keepimg != null && keepimg) {
 			oldImg = photoService.load(photo.getId()).getImage();
-		}
+		} else
+			photoService.deleteOldImage(photo.getId());
 
 		photoService.update(photo, image, oldImg);
 		return model;
@@ -97,6 +106,12 @@ public class AdminPhotoController extends AdminCommon {
 		byte[] response;
 		response = Files.readAllBytes(path);
 		return response;
+	}
+	
+	@RequestMapping(value = "/load-products-from-category", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getProducts(@RequestParam(value="id") Integer id) {
+		return productService.searchByCategoryId(id);
 	}
 
 	@RequestMapping(value = "/delete-photo", method = RequestMethod.GET)

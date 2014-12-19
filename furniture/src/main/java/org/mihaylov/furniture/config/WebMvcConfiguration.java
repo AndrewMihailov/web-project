@@ -36,6 +36,7 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/login").setViewName("admin/login");
 		registry.addViewController("/static").setViewName("upload_test");
+		registry.addViewController("/path").setViewName("path");
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	}
 

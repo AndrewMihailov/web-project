@@ -1,7 +1,10 @@
 package org.mihaylov.furniture.controller;
 
+import java.util.List;
+
 import org.mihaylov.furniture.entity.Order;
 import org.mihaylov.furniture.entity.Product;
+import org.mihaylov.furniture.service.CategoryService;
 import org.mihaylov.furniture.service.OrderService;
 import org.mihaylov.furniture.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class OrderController {
+public class OrderController extends UserCommon {
 
 	@Autowired
 	private OrderService orderService;
@@ -24,12 +27,21 @@ public class OrderController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private CategoryService categoryService;
+	
 	@RequestMapping(value = "/order", method = RequestMethod.GET)
 	public ModelAndView order() {
 		ModelAndView model = new ModelAndView("order");
-		model.addObject("groupedProducts",
-				productService.listGrouppedProducts());
+		init(model);
+		model.addObject("categories", categoryService.list());
 		return model;
+	}
+	
+	@RequestMapping(value = "/load-products-from-category", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Product> getProducts(@RequestParam(value = "id") Integer id) {
+		return productService.searchByCategoryId(id);
 	}
 	
 	@RequestMapping(value = "/make-order", method = RequestMethod.POST)

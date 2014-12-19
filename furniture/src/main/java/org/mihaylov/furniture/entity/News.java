@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 @Entity
@@ -38,14 +39,6 @@ public class News {
 	@Column(name= "title")
 	public String title;
 	
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	@Column(name = "preview")
 	private String preview;
 	
@@ -60,12 +53,25 @@ public class News {
 		date = new Date(new java.util.Date().getTime());
     }
 	
+	@PreUpdate
+	protected void onUpdate() {
+		date = new Date(new java.util.Date().getTime());
+	}
+	
 	public String getImage() {
 		return image;
 	}
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public int getId() {

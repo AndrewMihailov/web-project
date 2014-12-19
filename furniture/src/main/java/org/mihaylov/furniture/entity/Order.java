@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -32,8 +33,11 @@ public class Order {
 
 	@Column(name = "total")
 	private Integer total;
+	
+	@Column(name = "fulfilled")
+	private Boolean fulfilled;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@JoinTable(name = "order_product", joinColumns = @JoinColumn(name = "order_id"))
 	private List<OrderProducts> products = new ArrayList<OrderProducts>();
 
@@ -83,6 +87,14 @@ public class Order {
 
 	public void setTotal(Integer total) {
 		this.total = total;
+	}
+
+	public Boolean getFulfilled() {
+		return fulfilled;
+	}
+
+	public void setFulfilled(Boolean fulfilled) {
+		this.fulfilled = fulfilled;
 	}
 
 }

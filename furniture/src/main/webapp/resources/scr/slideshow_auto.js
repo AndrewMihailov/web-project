@@ -70,4 +70,19 @@ $(document)
 							$('#rightControl').show()
 						}
 					}
+					$('#rightControl').hide();
+					$('#leftControl').hide();
+					
+					//while (1) 
+						setInterval(function (){
+							currentPosition++;
+							if (currentPosition >= numberOfSlides)
+								currentPosition = 0;
+							$('#slideInner')
+							.animate(
+									{
+										'marginLeft' : slideWidth
+												* (-currentPosition)
+									});
+						}, 5000);
 				});

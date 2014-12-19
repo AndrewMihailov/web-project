@@ -51,6 +51,7 @@ public class AdminCategoryController extends AdminCommon {
 		
 		if (result.hasErrors()) {
 			// TODO handle errors
+			System.out.println("mapping error <==============================================================");
 			return model;
 		}
 		

@@ -5,6 +5,9 @@
 <head>
 <title>Furniture - Home</title>
 <%@ include file="/views/static/head.jsp"%>
+<script src="resources/scr/slideshow_auto.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="resources/css/slideshow.css" />" />
 </head>
 <body>
 
@@ -31,7 +34,7 @@
 
 			<div id="container">
 				<div id="center" class="column">
-					<h2>Последние новости</h2>
+					<h2><spring:message code='title.lastNews' /></h2>
 					<c:forEach var="inews" items="${news}">
 						<div class="news-col">
 							<p class="date">
@@ -45,29 +48,20 @@
 					</c:forEach>
 				</div>
 				<div id="left" class="column">
-					<h2>Информация о компании</h2>
+					<h2><spring:message code='title.about' /></h2>
 					<div class="info">
-						<p>Профессионалы мебельной фабрики ИЗГОТОВЛЕНИЕ МЕБЕЛИ уже
-							более 10 лет занимаются производством и продажей мебели на
-							территории Крыма (Севастополь, Симферополь). За это время нами
-							наработан опыт в сфере продаж, позволяющий удовлетворить самые
-							взыскательные запросы потребителей.</p>
-						<p>В о снове своей работы мы, как одни из лидеров среди
-							производителей мебели, ориентируемся на необходимость, с одной
-							стороны, предлагать достаточный ассортимент товара без потери его
-							качества, применяя современные дизайнерские разработки для всех
-							категорий покупателей, с другой, обеспечивать качественный
-							сервис.</p>
+						<p><spring:message code='text.aboutCompany' /></p>
 					</div>
 				</div>
 				<div id="right" class="column">
-					<h2>Акции</h2>
+					<h2><spring:message code='title.offers' /></h2>
 					
 					<c:forEach var="ioffer" items="${offers}">
 						<div class="offer">
-							<p class="text">${ioffer.preview}</p>
+							<p class="text">${ioffer.text}</p>
 							<p class="text">
-								Скидки на категорию ${ioffer.category.name} размером ${ioffer.size}%
+								<c:set var="catName" value="${pageContext.response.locale eq \"ru\"?ioffer.category.nameRu:ioffer.category.nameEn}" />
+								<spring:message code='text.sales' arguments="${catName}, ${ioffer.size}" />
 							</p>
 						</div>
 					</c:forEach>

@@ -5,6 +5,7 @@
 <head>
 <title>Admin-panel - Photo-editor</title>
 <%@ include file="/views/admin/static/head.jsp"%>
+<script src="/furniture/resources/scr/admin/photo.js"></script>
 <c:set var="page_id" scope="session" value="8" />
 </head>
 <body>
@@ -16,32 +17,47 @@
 			<c:if test="${edit}">
 				<c:set var="action" value="edit-photo" />
 			</c:if>
+			<p>Category</p>
+			<p>
+				<select name="category.id" id="category">
+					<c:forEach var="icategory" items="${categories}">
+						<option value="${icategory.id}"
+							<c:if test="${photo.product.category.id eq icategory.id}">selected</c:if>>${icategory.nameRu} | ${icategory.nameEn}</option>
+					</c:forEach>
+				</select>
+				<a href="#" id="load_products">Load products</a>
+			</p>
 			<form name="photo" action="${action}" method="post" enctype="multipart/form-data">
 				<c:if test="${edit}">
 					<input hidden="true" name="id" value="${photo.id}" />
 				</c:if>
+				
 				<p>Product</p>
 				<p>
 					<select name="product.id" id="product">
-						<c:forEach var="icategory" items="${groupedProducts}">
-							<c:if test="${icategory.value.size() ne 0}">
-								<optgroup label="${icategory.key}">
-									<c:forEach var="iproduct" items="${icategory.value}">
-										<option value="${iproduct.id}" <c:if test="${photo.product.id eq iproduct.id}">selected</c:if> >${iproduct.name}</option>
-									</c:forEach>
-								</optgroup>
-							</c:if>
-						</c:forEach>
+						<c:if test="${photo ne null}">
+							<option value="${photo.product.id}">${photo.product.nameRu} | ${photo.product.nameEn}</option>
+						</c:if>
 					</select>
+					<span id="product_error" class="error">Required selection</span>
 				</p>
 				
-				<p>Image <c:if test="${edit}"><input type="checkbox" name="keepimg" />Keep current (newly selected will be ignored)</c:if></p>
-				<p>
-					<input type="file" name="image1" value="${photo.image}" />
+				<p>Image <c:if test="${edit}">
+					<input type="checkbox" name="keepimg" id="keepimg" checked="checked" />
+						Keep current (newly selected will be ignored)
+					</c:if>
 				</p>
-				<p>Description</p>
 				<p>
-					<textarea rows="5" cols="100" name="description">${photo.description}</textarea>
+					<input type="file" name="image1" id="image1" value="${photo.image}" />
+					<span id="image1_error" class="error">Image required</span>
+				</p>
+				<p>Description RU</p>
+				<p>
+					<textarea rows="5" cols="100" name="descriptionRu">${photo.descriptionRu}</textarea>
+				</p>
+				<p>Description EN</p>
+				<p>
+					<textarea rows="5" cols="100" name="descriptionEn">${photo.descriptionEn}</textarea>
 				</p>
 				<p>Width</p>
 				<p>
@@ -72,15 +88,18 @@
 				</tr>
 				<c:forEach var="iphoto" items="${photos}">
 					<tr>
-						<td><input type="checkbox" name="${iphoto.id}" /></td>
-						<td>${iphoto.product.name}</td>
-						<td>
-						<img width="128px" height="128px" src="display-photo-${iphoto.id}.jpg" />
+						<td rowspan="2"><input type="checkbox" name="${iphoto.id}" /></td>
+						<td rowspan="2">${iphoto.product.nameRu} | ${iphoto.product.nameEn}</td>
+						<td rowspan="2">
+							<img width="128px" height="128px" src="display-photo-${iphoto.id}.jpg" />
 						</td>
-						<td>${iphoto.description}</td>
-						<td>${iphoto.width}</td>
-						<td>${iphoto.height}</td>
-						<td><a href="photo-editor?id=${iphoto.id}">Edit</a> | <a href="delete-photo?id=${iphoto.id}">Delete</a></td>
+						<td>${iphoto.descriptionRu}</td>
+						<td rowspan="2">${iphoto.width}</td>
+						<td rowspan="2">${iphoto.height}</td>
+						<td rowspan="2"><a href="photo-editor?id=${iphoto.id}">Edit</a> | <a href="delete-photo?id=${iphoto.id}">Delete</a></td>
+					</tr>
+					<tr>
+						<td>${iphoto.descriptionEn}</td>
 					</tr>
 				</c:forEach>
 			</table>

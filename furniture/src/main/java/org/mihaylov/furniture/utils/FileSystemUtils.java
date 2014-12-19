@@ -20,4 +20,11 @@ public class FileSystemUtils {
 		stream.close();
 		return path;
 	}
+	
+	public static void deleteFile(String path) {
+		if (path != null && !path.isEmpty()) {
+			File file = new File(path);
+			file.delete();
+		}
+	}
 }

@@ -32,6 +32,13 @@
 					<div class="clear"></div>
 				</div>
 			</c:forEach>
+			
+			<p>
+				Page:
+				<c:forEach var="i" begin="1" end="${totalPages}">
+					<a <c:if test="${i ne page}"> href="/furniture/news?page=${i}&perpage=${perpage}" </c:if>>${i}</a>
+				</c:forEach>
+			</p>
 		</div>
 
 	</div>

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product")
-@NamedQueries({ @NamedQuery(name = "searchByCategoryId", query = "select p from Product p join p.category c where c.id = :categoryId") })
+@NamedQueries({ @NamedQuery(name = "searchByCategoryId", query = "select p from Product p join p.category c where c.id = :categoryId or c.parent.id = :categoryId") })
 public class Product {
 
 	@Id
@@ -29,11 +29,17 @@ public class Product {
 	@JoinColumn(name = "designer_id")
 	private Designer designer;
 
-	@Column(name = "name")
-	private String name;
+	@Column(name = "name_ru")
+	private String nameRu;
+	
+	@Column(name = "name_en")
+	private String nameEn;
 
-	@Column(name = "description")
-	private String description;
+	@Column(name = "description_ru")
+	private String descriptionRu;
+	
+	@Column(name = "description_en")
+	private String descriptionEn;
 
 	@Column(name = "price")
 	private Integer price;
@@ -49,33 +55,12 @@ public class Product {
 	@Column(name = "image")
 	private String image;
 
-	@Override
-	public String toString() {
-		return String.format("%d %s", getId(), getName());
-	}
-
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public String getImage() {
@@ -100,6 +85,38 @@ public class Product {
 
 	public void setDesigner(Designer designer) {
 		this.designer = designer;
+	}
+
+	public String getNameRu() {
+		return nameRu;
+	}
+
+	public void setNameRu(String nameRu) {
+		this.nameRu = nameRu;
+	}
+
+	public String getNameEn() {
+		return nameEn;
+	}
+
+	public void setNameEn(String nameEn) {
+		this.nameEn = nameEn;
+	}
+
+	public String getDescriptionRu() {
+		return descriptionRu;
+	}
+
+	public void setDescriptionRu(String descriptionRu) {
+		this.descriptionRu = descriptionRu;
+	}
+
+	public String getDescriptionEn() {
+		return descriptionEn;
+	}
+
+	public void setDescriptionEn(String descriptionEn) {
+		this.descriptionEn = descriptionEn;
 	}
 
 }

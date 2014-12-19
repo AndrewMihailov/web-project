@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+#slideshow {
+	margin: 0 auto 0;
+	text-align: center;
+}
+
+.slider_wrap div {
+	display: none;
+}
+
+.slider_wrap div:first-child {
+	display: block;
+}
+
+#next, #prev {
+	cursor: pointer;
+}
+
+#next:hover, #prev:hover {
+	color: red;
+}

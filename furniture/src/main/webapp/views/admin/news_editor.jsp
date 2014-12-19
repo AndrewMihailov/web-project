@@ -5,6 +5,7 @@
 <head>
 <title>Admin-panel - News-editor</title>
 <%@ include file="/views/admin/static/head.jsp"%>
+<script src="/furniture/resources/scr/admin/news.js"></script>
 <c:set var="page_id" scope="session" value="3" />
 </head>
 <body>
@@ -22,21 +23,29 @@
 					<input hidden="true" name="id" value="${news.id}" />
 				</c:if>
 				<p>Language</p>
-				<input type="text" name="lang" value="${news.lang}" />
+				<select name="lang">
+					<option value="ru" <c:if test="${news.lang eq \"ru\"}">selected</c:if> >RU</option>
+					<option value="en" <c:if test="${news.lang eq \"en\"}">selected</c:if> >EN</option>
+				</select>
 				<p>Title</p>
-				<input type="text" name="title" value="${news.title}" />
+				<input type="text" name="title" id="title" value="${news.title}" />
+				<span id="title_error" class="error">Required to fill</span>
 				<p>Preview</p>
-				<textarea rows="5" cols="100" name="preview">${news.preview}</textarea>
+				<textarea rows="5" cols="100" name="preview" id="preview">${news.preview}</textarea>
+				<span id="preview_error" class="error">Required to fill</span>
 				<p>Full text</p>
-				<textarea rows="10" cols="100" name="text">${news.text}</textarea>
+				<textarea rows="10" cols="100" name="text" id="text">${news.text}</textarea>
+				<span id="text_error" class="error">Required to fill</span>
 				<p>
 					Image
 					<c:if test="${edit}">
-						<input type="checkbox" name="keepimg" />Keep current (newly selected will be ignored)</c:if>
+						<input type="checkbox" name="keepimg" checked="checked" />Keep current (newly selected will be ignored)
+					</c:if>
 				</p>
 				<input type="file" name="image1" value="${news.image}" />
-
-				<input type="submit" value="Add" />
+				<p>
+					<input type="submit" value="Add" />
+				</p>
 				<c:if test="${edit}">
 					<a href="news-editor">Discard</a>
 				</c:if>

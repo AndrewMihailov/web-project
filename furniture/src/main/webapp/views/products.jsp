@@ -31,11 +31,19 @@
 						</c:if>
 						<div class="clear"></div>
 						<p>${iproduct.price}Р</p>
-						<p>${iproduct.name}</p>
+						<c:set var="prName" value="${pageContext.response.locale eq \"ru\"?iproduct.nameRu:iproduct.nameEn}"></c:set>
+						<p>${prName}</p>
 					</td>
 				</c:forEach>
 				</tr>
 			</table>
+			
+			<p>
+				Page:
+				<c:forEach var="i" begin="1" end="${totalPages}">
+					<a <c:if test="${i ne page}"> href="/furniture/products?id=${curId}&page=${i}&perpage=${perpage}" </c:if>>${i}</a>
+				</c:forEach>
+			</p>
 		</div>
 
 	</div>

@@ -4,4 +4,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/admin.css" />" />
 
 <script src="/furniture/resources/scr/jquery-1.11.0.min.js"></script>
-<script src="/furniture/resources/scr/admin/admin.js"></script>
+<script src="/furniture/resources/scr/validate_assistant.js"></script>
+
+<script src="/furniture/resources/scr/tinymce/tinymce.min.js"></script>
+<script>tinymce.init({selector:'textarea'});</script>

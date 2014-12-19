@@ -7,16 +7,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "offer")
+@NamedQueries({ @NamedQuery(name = "selectOffersByLocale", query = "from Offer o where o.lang = :lang") })
 public class Offer {
 
 	@Id
 	@Column(name = "offer_id")
 	@GeneratedValue
 	private int id;
+	
+	@Column(name = "lang")
+	private String lang;
 
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "category_id")
@@ -25,15 +31,15 @@ public class Offer {
 	@Column(name = "size")
 	private int size;
 
-	@Column(name = "preview")
-	private String preview;
-
 	@Column(name = "text")
 	private String text;
 	
-	@Override
-	public String toString() {
-		return String.format("%d %d %s", getId(), getCategory().getId(), getCategory().getName());
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
 	}
 
 	public int getId() {
@@ -42,14 +48,6 @@ public class Offer {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getPreview() {
-		return preview;
-	}
-
-	public void setPreview(String preview) {
-		this.preview = preview;
 	}
 
 	public String getText() {

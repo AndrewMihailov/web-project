@@ -5,6 +5,9 @@
 <head>
 <title>Furniture - News</title>
 <%@ include file="/views/static/head.jsp"%>
+<script src="resources/scr/slideshow_manual.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="resources/css/slideshow_manual.css" />" />
 </head>
 <body>
 
@@ -12,31 +15,44 @@
 		<%@ include file="/views/static/header.jsp"%>
 		<div id="content">
 			<div class="product">
-				<h2>${product.name}</h2>
+				<c:set var="catName" value="${pageContext.response.locale eq \"ru\"?product.category.nameRu:product.category.nameEn}" />
+				<c:set var="prName" value="${pageContext.response.locale eq \"ru\"?product.nameRu:product.nameEn}" />
+				<c:set var="prDescr" value="${pageContext.response.locale eq \"ru\"?product.descriptionRu:product.descriptionEn}" />
+				<h2>${prName}</h2>
 				<table class="product-info">
 					<tr>
-						<th>Категория</th>
-						<td>${product.category.name}</td>
+						<th><spring:message code="product.category" /></th>
+						<td>${catName}</td>
 					</tr>
 					<tr>
-						<th>Дизайнер</th>
+						<th><spring:message code="product.designer" /></th>
 						<td>${product.designer.fio}</td>
 					</tr>
 					<tr>
-						<th>Цена</th>
+						<th><spring:message code="product.price" /></th>
 						<td>${product.price}Р</td>
-					</tr>
-					<tr>
-						<th>Фото</th>
-						<td><a href="photos?product_id=${product.id}">ссылка</a></td>
 					</tr>
 				</table>
 
-				<p>${product.description}</p>
+				<p>${prDescr}</p>
+				<br />
 
-				<c:if test="${product.image ne \"\" && product.image ne null}">
-					<img class="img" src="display-product-img-${product.id}.jpg" />
-				</c:if>
+				<div id="slideshow">
+					<span id="prev"><spring:message code="control.prev" /></span>
+					<span id="next"><spring:message code="control.next" /></span>
+					
+					<div id="slider" class="slider_wrap">
+					
+						<c:forEach var="iphoto" items="${photos}">
+							<div class="slide">
+								<p><img src="display-photo-${iphoto.id}.jpg" width="${iphoto.width}" height="${iproduct.height}" /></p>
+								<c:set var="photoDescr" value="${pageContext.response.locale eq \"ru\"?iphoto.descriptionRu:iphoto.descriptionEn}" />
+								<p>${photoDescr}</p>
+							</div>
+						</c:forEach>
+					
+					</div>
+				</div>
 			</div>
 		</div>
 

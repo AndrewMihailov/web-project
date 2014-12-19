@@ -4,18 +4,30 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "contact")
+@NamedQueries({ @NamedQuery(name = "selectContactsByLocale", query = "from Contact c where c.lang = :lang") })
 public class Contact {
 
 	@Id
 	@Column(name = "contact_id")
 	@GeneratedValue
 	private int id;
+	
+	@Column(name = "lang")
+	private String lang;
+
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
 
 	@Column(name = "type")
 	private String type;
@@ -24,8 +36,6 @@ public class Contact {
 	private String fio;
 
 	@Column(name = "tel_number")
-	@Pattern(regexp="[0-9]*", message="invalid format")
-	@Size(min=6, max=11)
 	private String telNumber;
 	
 	@Column(name = "email")

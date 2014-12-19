@@ -9,8 +9,6 @@ import javax.validation.Valid;
 
 import org.mihaylov.furniture.entity.News;
 import org.mihaylov.furniture.service.NewsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,9 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdminNewsController extends AdminCommon {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(AdminNewsController.class);
-	
 	@Autowired
 	private NewsService newsService;
 	
@@ -56,8 +51,6 @@ public class AdminNewsController extends AdminCommon {
 			return model;
 		}
 		
-		logger.info("Text:" + news.getText());
-		
 		newsService.save(news, image);
 		return model;
 	}
@@ -72,9 +65,6 @@ public class AdminNewsController extends AdminCommon {
 			// TODO handle errors
 			return model;
 		}
-		
-		logger.info("Text:" + news.getText());
-		
 		/*
 		 * Если нужно хранить старую картинку
 		 * но она нулл, заменяем имя пустой строкой
@@ -86,10 +76,8 @@ public class AdminNewsController extends AdminCommon {
 		String oldImg = null;
 		if (keepimg != null && keepimg) {
 			oldImg = newsService.load(news.getId()).getImage();
-			if (oldImg == null)
-				oldImg = "";
-		} else if (image.isEmpty())
-			return model;
+		} else
+			newsService.deleteOldImage(news.getId());
 		
 		newsService.update(news, image, oldImg);
 		return model;

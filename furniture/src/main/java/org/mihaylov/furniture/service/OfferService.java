@@ -1,6 +1,7 @@
 package org.mihaylov.furniture.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.mihaylov.furniture.dao.OfferDao;
 import org.mihaylov.furniture.entity.Offer;
@@ -22,6 +23,11 @@ public class OfferService {
 	@Transactional
 	public List<Offer> list() {
 		return offerDao.list();
+	}
+	
+	@Transactional
+	public List<Offer> list(Locale locale) {
+		return offerDao.selectByLocale(locale.toString());
 	}
 	
 	@Transactional

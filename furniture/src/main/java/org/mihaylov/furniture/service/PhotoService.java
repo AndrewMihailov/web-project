@@ -56,9 +56,8 @@ public class PhotoService {
 	@Transactional
 	public void update(Photo photo, MultipartFile image, String oldImg)
 			throws IOException {
-		if (oldImg != null) {
-			photo.setImage(oldImg);
-		} else if (image != null) {
+		photo.setImage(oldImg);
+		if (image != null && !image.isEmpty() && oldImg == null) {
 			photo.setImage(savePhoto(image));
 		}
 		photoDao.update(photo);
@@ -66,5 +65,9 @@ public class PhotoService {
 	
 	private String savePhoto(MultipartFile file) throws IOException {
 		return FileSystemUtils.saveMultipart(file, "photo");
+	}
+	
+	public void deleteOldImage(Integer id) {
+		FileSystemUtils.deleteFile(load(id).getImage());
 	}
 }

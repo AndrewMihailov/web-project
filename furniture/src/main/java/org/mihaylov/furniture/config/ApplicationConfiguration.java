@@ -18,6 +18,7 @@ import org.mihaylov.furniture.entity.Admin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
@@ -27,6 +28,22 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 @Configuration
 @EnableTransactionManagement
 public class ApplicationConfiguration {
+	
+	@Bean
+	public JavaMailSenderImpl mailSender() {
+		JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+		javaMailSender.setHost("smtp.gmail.com");
+		javaMailSender.setPort(465);
+		javaMailSender.setProtocol("smtps");
+		javaMailSender.setUsername("vaaeppeort@gmail.com");
+		javaMailSender.setPassword("25363411");
+		Properties javaMailProperties = new Properties();
+		javaMailProperties.put("mail.smtps.auth", true);
+		javaMailProperties.put("mail.smtps.starttls.enable", true);
+		javaMailProperties.put("mail.smtps.debug", true);
+		javaMailSender.setJavaMailProperties(javaMailProperties);
+		return new JavaMailSenderImpl();
+	}
 
 	@Bean
 	public AdminDao adminDao() {

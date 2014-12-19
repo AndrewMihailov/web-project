@@ -26,7 +26,8 @@ public class NewsService {
 	
 	@Transactional
 	public void save(News news, MultipartFile image) throws IOException {
-		news.setImage(saveImage(image));
+		if (!image.isEmpty())
+			news.setImage(saveImage(image));
 		news.setDate(new Date(new java.util.Date().getTime()));
 		newsDao.save(news);
 	}
@@ -58,15 +59,19 @@ public class NewsService {
 	@Transactional
 	public void update(News news, MultipartFile image, String oldImg)
 			throws IOException {
-		if (oldImg != null) {
-			news.setImage(oldImg);
-		} else if (image != null) {
+		news.setImage(oldImg);
+		if (image != null && !image.isEmpty() && oldImg == null) {
 			news.setImage(saveImage(image));
 		}
+		news.setDate(new Date(new java.util.Date().getTime()));
 		newsDao.update(news);
 	}
 	
 	private String saveImage(MultipartFile file) throws IOException {
 		return FileSystemUtils.saveMultipart(file, "news");
+	}
+
+	public void deleteOldImage(Integer id) {
+		FileSystemUtils.deleteFile(load(id).getImage());
 	}
 }

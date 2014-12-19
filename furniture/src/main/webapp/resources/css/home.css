@@ -6,6 +6,10 @@
 	padding-right: 390px; /* RC width */
 }
 
+a img {
+	border: none;
+}
+
 #container .column {
 	float: left;
 	position: relative;
@@ -54,7 +58,7 @@
 .in-list-material {
 	padding: 5px;
 	padding-top: 10px;
-	border-bottom: 1px solid #f9cfa2;
+	border-top: 1px solid #f9cfa2;
 }
 
 .date {
@@ -119,4 +123,9 @@
 	border: 1px solid #f9cfa2;
 	padding: 5px;
 	overflow: hidden;
+}
+
+.error {
+	color: red;
+	display: none;
 }

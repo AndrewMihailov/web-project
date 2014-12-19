@@ -54,6 +54,11 @@
 					class="current"
 				</c:if>
 				href="/furniture/admin/contact-editor">Contact editor</a></li>
+			<li><a
+				<c:if test="${page_id eq 10}">
+					class="current"
+				</c:if>
+				href="/furniture/admin/order-manager">Order manager</a></li>
 		</ul>
 	</div>
 

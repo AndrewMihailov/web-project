@@ -19,7 +19,8 @@ html, body {
 	width: 1200px;
 	margin: 0 auto;
 	min-height: 100%;
-    margin-bottom: -70px;
+    /* margin-bottom: -70px; */
+    padding-bottom: 20px;
     background-color: white;
 }
 
@@ -42,5 +43,5 @@ html, body {
 	padding-top: 5px;
 	padding-right: 5px;
 	text-align: right;
-	margin-top: 40px;
+	/*margin-top: 40px;*/
 }
