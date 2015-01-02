@@ -25,6 +25,16 @@ public class CategoryService {
 	public List<Category> list() {
 		return categoryDao.list();
 	}
+	
+	@Transactional
+	public List<Category> list(Integer first, Integer limit) {
+		return categoryDao.list(first, limit == null ? 5 : limit);
+	}
+	
+	@Transactional
+	public Integer count() {
+		return categoryDao.count();
+	}
 
 	@Transactional
 	public void delete(Integer id) {
@@ -45,9 +55,24 @@ public class CategoryService {
 	public Map<Category, List<Category>> listOrganized() {
 		Map<Category, List<Category>> result = new LinkedHashMap<Category, List<Category>>();
 		List<Category> root = categoryDao.selectRoot();
-		for (Category category : root) {
-			result.put(category, categoryDao.selectByParent(category.getId()));
+		result.put(null, root);
+		/*
+		 * бежим по не рутам
+		 * если родака нет в резулте
+		 *	 пихаем тудойть родака
+		 * пихаем к родаку всех чилдренов
+		 */
+		List<Category> list = categoryDao.list();
+		for (Category category : list) {
+			if (category.getParent() != null) {
+				if (!result.containsKey(category.getParent()))
+					result.put(category.getParent(), categoryDao.selectByParent(category.getParent().getId()));
+			}
 		}
 		return result;
+	}
+
+	public List<Category> listRoot() {
+		return categoryDao.selectRoot();
 	}
 }

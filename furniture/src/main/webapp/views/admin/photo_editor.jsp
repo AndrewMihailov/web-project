@@ -20,9 +20,18 @@
 			<p>Category</p>
 			<p>
 				<select name="category.id" id="category">
+					<c:set var="groupName" value="root" />
 					<c:forEach var="icategory" items="${categories}">
-						<option value="${icategory.id}"
-							<c:if test="${photo.product.category.id eq icategory.id}">selected</c:if>>${icategory.nameRu} | ${icategory.nameEn}</option>
+						<c:if test="${icategory.key ne null}">
+							<c:set var="groupName" value="${icategory.key.nameRu} | ${icategory.key.nameEn}" />
+						</c:if>
+						<optgroup label="${groupName}">
+							<c:forEach var="iicategory" items="${icategory.value}">
+								<option value="${iicategory.id}" <c:if test="${product.category.id eq iicategory.id}">selected</c:if>>
+									${iicategory.nameRu} | ${iicategory.nameEn}
+								</option>
+							</c:forEach>
+						</optgroup>
 					</c:forEach>
 				</select>
 				<a href="#" id="load_products">Load products</a>
@@ -103,6 +112,21 @@
 					</tr>
 				</c:forEach>
 			</table>
+			
+			<p>
+				Page:
+				<c:forEach var="i" begin="1" end="${totalPages}">
+					<a <c:if test="${i ne page}"> href="/furniture/admin/photo-editor?page=${i}&perpage=${perpage}" </c:if>>${i}</a>
+				</c:forEach>
+			</p>
+			<p>
+				Per page:
+				<select id="perpage">
+					<option value="1" <c:if test="${perpage eq 1}">selected="selected"</c:if> >1</option>
+					<option value="2" <c:if test="${perpage eq 2}">selected="selected"</c:if> >2</option>
+					<option value="5" <c:if test="${perpage eq 5}">selected="selected"</c:if> >5</option>
+				</select>
+			</p>
 
 		</div>
 	</div>

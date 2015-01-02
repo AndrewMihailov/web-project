@@ -23,6 +23,16 @@ public class AdminService {
 	public List<Admin> list() {
 		return adminDao.list();
 	}
+	
+	@Transactional
+	public List<Admin> list(Integer first, Integer limit) {
+		return adminDao.list(first, limit == null ? 5 : limit);
+	}
+	
+	@Transactional
+	public Integer count() {
+		return adminDao.count();
+	}
 
 	@Transactional
 	public void delete(Integer id) {

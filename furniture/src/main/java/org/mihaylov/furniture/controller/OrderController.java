@@ -34,7 +34,7 @@ public class OrderController extends UserCommon {
 	public ModelAndView order() {
 		ModelAndView model = new ModelAndView("order");
 		init(model);
-		model.addObject("categories", categoryService.list());
+		model.addObject("categories", categoryService.listOrganized());
 		return model;
 	}
 	

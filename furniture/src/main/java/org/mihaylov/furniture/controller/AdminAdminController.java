@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.mihaylov.furniture.entity.Admin;
 import org.mihaylov.furniture.service.AdminService;
+import org.mihaylov.furniture.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,9 +21,15 @@ public class AdminAdminController extends AdminCommon {
 	private AdminService adminService;
 	
 	@RequestMapping(value = "/admin-editor", method = RequestMethod.GET)
-	public ModelAndView adminEditor(@RequestParam(required=false) Integer id) {
+	public ModelAndView adminEditor(@RequestParam(required=false) Integer id,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "perpage", required = false) Integer perpage) {
 		ModelAndView model = new ModelAndView("admin/admin_editor");
-		model.addObject("admins", adminService.list());
+		
+		Integer cnt = adminService.count();
+		PaginationUtils.paginate(model, page, perpage, cnt, "admins",
+				adminService.list(PaginationUtils.getStart(page, perpage, adminService.count()), perpage));
+		//model.addObject("admins", adminService.list());
 		init(model);
 		
 		if (id != null) {

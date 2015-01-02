@@ -5,8 +5,6 @@ import java.util.List;
 import org.mihaylov.furniture.dao.OrderDao;
 import org.mihaylov.furniture.dao.ProductDao;
 import org.mihaylov.furniture.entity.Order;
-import org.mihaylov.furniture.entity.OrderProducts;
-import org.mihaylov.furniture.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
@@ -41,7 +39,7 @@ public class OrderService {
 		}
 		
 		order.setTotal(0);
-		if (order.getProducts().size() == 0)
+		/*if (order.getProducts().size() == 0)
 			return;
 		
 		int sum = 0;
@@ -59,13 +57,23 @@ public class OrderService {
 		}
 			
 		order.setTotal(new Integer(sum));
-		
+		*/
 		orderDao.save(order);
 	}
 	
 	@Transactional
 	public List<Order> list() {
 		return orderDao.list();
+	}
+	
+	@Transactional
+	public List<Order> list(Integer first, Integer limit) {
+		return orderDao.list(first, limit == null ? 5 : limit);
+	}
+	
+	@Transactional
+	public Integer count() {
+		return orderDao.count();
 	}
 	
 	@Transactional

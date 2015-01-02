@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.mihaylov.furniture.entity.Contact;
 import org.mihaylov.furniture.service.ContactService;
+import org.mihaylov.furniture.utils.PaginationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,15 @@ public class AdminContactController extends AdminCommon {
 	
 	
 	@RequestMapping(value = "/contact-editor", method = RequestMethod.GET)
-	public ModelAndView contactEditor(@RequestParam(required=false) Integer id) {
+	public ModelAndView contactEditor(@RequestParam(required=false) Integer id,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "perpage", required = false) Integer perpage) {
 		ModelAndView model = new ModelAndView("admin/contact_editor");
-		model.addObject("contacts", contactService.list());
+		
+		Integer cnt = contactService.count();
+		PaginationUtils.paginate(model, page, perpage, cnt, "contacts",
+				contactService.list(PaginationUtils.getStart(page, perpage, contactService.count()), perpage));
+		//model.addObject("contacts", contactService.list());
 		init(model);
 		
 		if (id != null) {

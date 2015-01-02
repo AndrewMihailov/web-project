@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.mihaylov.furniture.entity.Designer;
 import org.mihaylov.furniture.service.DesignerService;
+import org.mihaylov.furniture.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,9 +21,15 @@ public class AdminDesignerController extends AdminCommon {
 	private DesignerService designerService;
 	
 	@RequestMapping(value = "/designer-editor", method = RequestMethod.GET)
-	public ModelAndView designerEditor(@RequestParam(required=false) Integer id) {
+	public ModelAndView designerEditor(@RequestParam(required=false) Integer id,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "perpage", required = false) Integer perpage) {
 		ModelAndView model = new ModelAndView("admin/designer_editor");
-		model.addObject("designers", designerService.list());
+		
+		Integer cnt = designerService.count();
+		PaginationUtils.paginate(model, page, perpage, cnt, "designers",
+				designerService.list(PaginationUtils.getStart(page, perpage, designerService.count()), perpage));
+		//model.addObject("designers", designerService.list());
 		init(model);
 		
 		if (id != null) {

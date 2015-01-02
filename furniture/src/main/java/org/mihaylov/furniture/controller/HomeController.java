@@ -1,7 +1,6 @@
 package org.mihaylov.furniture.controller;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -42,23 +41,12 @@ public class HomeController extends UserCommon {
 		ModelAndView model = new ModelAndView("home");
 		init(model);
 		
-		List<News> newsList = newsService.list(locale);
-		List<News> newNewsList = new ArrayList<News>();
-		int maxNews = 5;
-		if (maxNews > newsList.size())
-			maxNews = newsList.size();
-		for (int i = 0; i < maxNews; i++)
-			newNewsList.add(newsList.get(i));
-		List<Offer> offerList = offerService.list(locale);
-		List<Offer> newOfferList = new ArrayList<Offer>();
-		int maxOffers = 5;
-		if (maxOffers > offerList.size())
-			maxOffers = offerList.size();
-		for (int i = 0; i < maxOffers; i++)
-			newOfferList.add(offerList.get(i));
+		Integer perPage = 5;
+		List<News> newsList = newsService.list(0, perPage, locale);
+		List<Offer> offerList = offerService.list(0, perPage, locale);
 		
-		model.addObject("news", newNewsList);
-		model.addObject("offers", newOfferList);
+		model.addObject("news", newsList);
+		model.addObject("offers", offerList);
 
 		return model;
 	}

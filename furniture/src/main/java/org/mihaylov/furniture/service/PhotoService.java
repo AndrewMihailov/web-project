@@ -32,6 +32,16 @@ public class PhotoService {
 	public List<Photo> list() {
 		return photoDao.list();
 	}
+	
+	@Transactional
+	public List<Photo> list(Integer first, Integer limit) {
+		return photoDao.list(first, limit == null ? 5 : limit);
+	}
+	
+	@Transactional
+	public Integer count() {
+		return photoDao.count();
+	}
 
 	@Transactional
 	public void delete(Integer id) {

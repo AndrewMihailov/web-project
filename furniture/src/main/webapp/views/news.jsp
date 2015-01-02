@@ -19,7 +19,6 @@
 						<a href="/furniture/news-page?id=${inews.id}">${inews.title}</a>
 					</h3>
 					<p class="date">
-						Дата:
 						<c:choose>
 							<c:when test="${inews.date ne null}">${inews.date}</c:when>
 							<c:otherwise>null</c:otherwise>

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.mihaylov.furniture.entity.News;
 import org.mihaylov.furniture.service.NewsService;
+import org.mihaylov.furniture.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,9 +29,15 @@ public class AdminNewsController extends AdminCommon {
 	private NewsService newsService;
 	
 	@RequestMapping(value = "/news-editor", method = RequestMethod.GET)
-	public ModelAndView newsEditor(@RequestParam(required=false) Integer id) {
+	public ModelAndView newsEditor(@RequestParam(required=false) Integer id,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "perpage", required = false) Integer perpage) {
 		ModelAndView model = new ModelAndView("admin/news_editor");
-		model.addObject("newss", newsService.list());
+		
+		Integer cnt = newsService.count();
+		PaginationUtils.paginate(model, page, perpage, cnt, "newss",
+				newsService.list(PaginationUtils.getStart(page, perpage, newsService.count()), perpage));
+		//model.addObject("newss", newsService.list());
 		init(model);
 		
 		if (id != null) {

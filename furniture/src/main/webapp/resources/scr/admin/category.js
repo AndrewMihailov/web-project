@@ -13,6 +13,10 @@ function onload() {
 		else
 			e.attr("name", "parent.id");
 	});
+	
+	$('#perpage').on('change', function () {
+		document.location.href='?perpage=' + $(this).val();
+	});
 }
 
 function initCheck() {

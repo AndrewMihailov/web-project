@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -15,11 +16,16 @@ public class AdminOrderManagerController extends AdminCommon {
 	private OrderService orderService;
 	
 	@RequestMapping(value = { "/order-manager" }, method = RequestMethod.GET)
-	public ModelAndView orderManager() {
+	public ModelAndView orderManager(
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "perpage", required = false) Integer perpage) {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("admin/order_manager");
 		init(model);
 		
+		/*Integer cnt = orderService.count();
+		PaginationUtils.paginate(model, page, perpage, cnt, "orders",
+				orderService.list(PaginationUtils.getStart(page, perpage, orderService.count()), perpage));*/
 		model.addObject("orders", orderService.list());
 		
 		return model;

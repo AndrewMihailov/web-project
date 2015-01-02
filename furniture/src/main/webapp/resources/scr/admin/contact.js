@@ -3,6 +3,10 @@ $(onload);
 
 function onload() {
 	setPresender('contact');
+	
+	$('#perpage').on('change', function () {
+		document.location.href='?perpage=' + $(this).val();
+	});
 }
 
 function initCheck() {

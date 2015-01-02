@@ -11,6 +11,7 @@ import org.mihaylov.furniture.entity.Product;
 import org.mihaylov.furniture.service.CategoryService;
 import org.mihaylov.furniture.service.DesignerService;
 import org.mihaylov.furniture.service.ProductService;
+import org.mihaylov.furniture.utils.PaginationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,17 @@ public class AdminProductController extends AdminCommon {
 			.getLogger(AdminProductController.class);
 
 	@RequestMapping(value = "/product-editor", method = RequestMethod.GET)
-	public ModelAndView productEditor(@RequestParam(required = false) Integer id) {
+	public ModelAndView productEditor(@RequestParam(required = false) Integer id,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "perpage", required = false) Integer perpage) {
 		ModelAndView model = new ModelAndView("admin/product_editor");
-		model.addObject("categories", categoryService.list());
+		model.addObject("categories", categoryService.listOrganized());
 		model.addObject("designers", designerService.list());
-		model.addObject("products", productService.list());
+		
+		Integer cnt = productService.count();
+		PaginationUtils.paginate(model, page, perpage, cnt, "products",
+				productService.list(PaginationUtils.getStart(page, perpage, productService.count()), perpage));
+		//model.addObject("products", productService.list());
 		init(model);
 
 		if (id != null) {

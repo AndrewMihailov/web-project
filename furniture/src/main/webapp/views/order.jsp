@@ -33,11 +33,21 @@ locale='${pageContext.response.locale}';
 				<p><spring:message code="order.category" /></p>
 				<p>
 					<select name="category.id" id="category">
+						<c:set var="groupName" value="root" />
 						<c:forEach var="icategory" items="${categories}">
-							<option value="${icategory.id}">
-								<c:set var="catName" value="${pageContext.response.locale eq \"ru\"?icategory.nameRu:icategory.nameEn}" />
-								${catName}
-							</option>
+							<%-- <option value="${icategory.id}"
+								<c:if test="${product.category.id eq icategory.id}">selected</c:if>>${icategory.nameRu} | ${icategory.nameEn}
+							</option> --%>
+							<c:if test="${icategory.key ne null}">
+								<c:set var="groupName" value="${icategory.key.nameRu} | ${icategory.key.nameEn}" />
+							</c:if>
+							<optgroup label="${groupName}">
+								<c:forEach var="iicategory" items="${icategory.value}">
+									<option value="${iicategory.id}" <c:if test="${product.category.id eq iicategory.id}">selected</c:if>>
+										${iicategory.nameRu} | ${iicategory.nameEn}
+									</option>
+								</c:forEach>
+							</optgroup>
 						</c:forEach>
 					</select>
 					<a href="#" id="load_products"><spring:message code="order.loadProducts" /></a>
@@ -61,7 +71,8 @@ locale='${pageContext.response.locale}';
 				</table>
 				<p class="error" id="list_error"><spring:message code='error.emptyList' /></p>
 				<p><spring:message code="order.sum" /></p>
-				<p id="total">0</p>
+				<!-- <p id="total">0</p> -->
+				<p><input type="text" disabled="disabled" id="total" name="total" /></p>
 				<input type="submit" value="<spring:message code="order.order" />" />
 
 			</form>

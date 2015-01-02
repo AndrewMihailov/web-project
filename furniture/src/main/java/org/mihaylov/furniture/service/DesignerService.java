@@ -23,6 +23,17 @@ public class DesignerService {
 	public List<Designer> list() {
 		return designerDao.list();
 	}
+	
+	@Transactional
+	public List<Designer> list(Integer first, Integer limit) {
+		return designerDao.list(first, limit == null ? 5 : limit);
+	}
+	
+	@Transactional
+	public Integer count() {
+		return designerDao.count();
+	}
+
 
 	@Transactional
 	public void delete(Integer id) {

@@ -81,6 +81,21 @@
 					</tr>
 				</c:forEach>
 			</table>
+			
+			<p>
+				Page:
+				<c:forEach var="i" begin="1" end="${totalPages}">
+					<a <c:if test="${i ne page}"> href="/furniture/admin/news-editor?page=${i}&perpage=${perpage}" </c:if>>${i}</a>
+				</c:forEach>
+			</p>
+			<p>
+				Per page:
+				<select id="perpage">
+					<option value="1" <c:if test="${perpage eq 1}">selected="selected"</c:if> >1</option>
+					<option value="2" <c:if test="${perpage eq 2}">selected="selected"</c:if> >2</option>
+					<option value="5" <c:if test="${perpage eq 5}">selected="selected"</c:if> >5</option>
+				</select>
+			</p>
 
 		</div>
 	</div>

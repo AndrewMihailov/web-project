@@ -32,12 +32,25 @@
 				<p>Parent category</p>
 				<p>
 					<select name="parent.id" id="parent">
+						<c:set var="groupName" value="root" />
 						<option value="null">Null</option>
-						<c:forEach var="icategory" items="${categories}">
-							<c:if test="${category.id ne icategory.id}">
-							<option value="${icategory.id}"
-								<c:if test="${category.parent.id eq icategory.id}">selected</c:if>>${icategory.nameRu} | ${icategory.nameEn}</option>
+						<c:forEach var="icategory" items="${categoryList}">
+							<%-- <c:if test="${category.id ne icategory.id}">
+								<option value="${icategory.id}"
+									<c:if test="${category.parent.id eq icategory.id}">selected</c:if>>${icategory.nameRu} | ${icategory.nameEn}
+								</option>
+							</c:if> --%>
+							
+							<c:if test="${icategory.key ne null}">
+								<c:set var="groupName" value="${icategory.key.nameRu} | ${icategory.key.nameEn}" />
 							</c:if>
+							<optgroup label="${groupName}">
+								<c:forEach var="iicategory" items="${icategory.value}">
+									<option value="${iicategory.id}" <c:if test="${category.parent.id eq iicategory.id}">selected</c:if>>
+										${iicategory.nameRu} | ${iicategory.nameEn}
+									</option>
+								</c:forEach>
+							</optgroup>
 						</c:forEach>
 					</select>
 				</p>
@@ -72,6 +85,22 @@
 					</tr>
 				</c:forEach>
 			</table>
+			
+			<p>
+				Page:
+				<c:forEach var="i" begin="1" end="${totalPages}">
+					<a <c:if test="${i ne page}"> href="/furniture/admin/category-editor?page=${i}&perpage=${perpage}" </c:if>>${i}</a>
+				</c:forEach>
+			</p>
+			<p>
+				Per page:
+				<select id="perpage">
+					<option value="1" <c:if test="${perpage eq 1}">selected="selected"</c:if> >1</option>
+					<option value="2" <c:if test="${perpage eq 2}">selected="selected"</c:if> >2</option>
+					<option value="5" <c:if test="${perpage eq 5}">selected="selected"</c:if> >5</option>
+					<option value="20" <c:if test="${perpage eq 20}">selected="selected"</c:if> >20</option>
+				</select>
+			</p>
 
 		</div>
 	</div>

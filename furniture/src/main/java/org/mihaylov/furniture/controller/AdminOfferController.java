@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.mihaylov.furniture.entity.Offer;
 import org.mihaylov.furniture.service.CategoryService;
 import org.mihaylov.furniture.service.OfferService;
+import org.mihaylov.furniture.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,11 +25,17 @@ public class AdminOfferController extends AdminCommon {
 	private OfferService offerService;
 	
 	@RequestMapping(value = "/offers-editor", method = RequestMethod.GET)
-	public ModelAndView offersEditor(@RequestParam(required=false) Integer id) {
+	public ModelAndView offersEditor(@RequestParam(required=false) Integer id,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "perpage", required = false) Integer perpage) {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("admin/offers_editor");
 		model.addObject("categories", categoryService.list());
-		model.addObject("offers", offerService.list());
+		
+		Integer cnt = offerService.count();
+		PaginationUtils.paginate(model, page, perpage, cnt, "offers",
+				offerService.list(PaginationUtils.getStart(page, perpage, offerService.count()), perpage));
+		//model.addObject("offers", offerService.list());
 		init(model);
 		
 		if (id != null) {

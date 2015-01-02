@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "news")
-@NamedQueries({ @NamedQuery(name = "selectNewsByLocale", query = "from News n where n.lang = :lang") })
+@NamedQueries({ @NamedQuery(name = "selectNewsByLocale", query = "from News n where n.lang = :lang")})
 public class News {
 
 	@Id

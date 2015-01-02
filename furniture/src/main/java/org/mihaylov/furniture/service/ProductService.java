@@ -1,10 +1,12 @@
 package org.mihaylov.furniture.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mihaylov.furniture.dao.CategoryDao;
 import org.mihaylov.furniture.dao.ProductDao;
+import org.mihaylov.furniture.entity.Category;
 import org.mihaylov.furniture.entity.Product;
 import org.mihaylov.furniture.utils.FileSystemUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,16 @@ public class ProductService {
 	public List<Product> list() {
 		return productDao.list();
 	}
+	
+	@Transactional
+	public Integer count() {
+		return productDao.count();
+	}
+	
+	@Transactional
+	public List<Product> list(Integer first, Integer limit) {
+		return productDao.list(first, limit == null ? 5 : limit);
+	}
 
 	@Transactional
 	public void delete(Integer id) {
@@ -49,8 +61,55 @@ public class ProductService {
 	}
 	
 	@Transactional
+	public List<Product> searchByCategoryId(Integer id, Integer first, Integer limit) {
+		Category root = categoryDao.load(id);
+		List<Category> categories = categoryDao.selectByParent(id);
+		categories.add(root);
+		
+		List<Product> list = new ArrayList<Product>();
+		for (Category category : categories) {
+			list.addAll(productDao.searchByCategoryId(category.getId(), first, limit));
+		}
+		/*
+		Category root = categoryDao.load(id);
+		List<Product> list = new ArrayList<Product>();
+		List<Category> categories = categoryDao.selectByParent(id);
+		categories.add(root);
+		
+		while (categories.size() > 0) {
+			Category category = categories.get(0);
+			List<Category> children = categoryDao.listChildren(category);
+			categories.addAll(children);
+			
+			list.addAll(productDao.searchByCategoryId(category.getId()));
+			categories.remove(0);
+		}
+		
+		Integer i = first;
+		while (i > 0) {
+			list.remove(0);
+			i--;
+		}
+		while (list.size() > limit)
+			list.remove(list.size() - 1);
+		*/
+		return list;
+	}
+	
+	@Transactional
 	public List<Product> searchByCategoryId(Integer id) {
-		return productDao.searchByCategoryId(id);
+		Category root = categoryDao.load(id);
+		List<Product> list = new ArrayList<Product>();
+		List<Category> categories = categoryDao.selectByParent(id);
+		categories.add(root);
+		
+		while (categories.size() > 0) {
+			Category category = categories.get(0);
+			categories.addAll(categoryDao.listChildren(category));
+			list.addAll(productDao.searchByCategoryId(category.getId()));
+			categories.remove(0);
+		}
+		return list;
 	}
 	
 	@Transactional

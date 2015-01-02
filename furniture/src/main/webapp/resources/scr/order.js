@@ -11,13 +11,13 @@ function onload() {
 						$('<td>', {text: product.price}),
 						$('<td>').append(
 						$('<a>', {text: 'X', href: '#', click: function () {
-							var oldTotal = $('#total').text();
-							$('#total').text(oldTotal - product.price);
+							var oldTotal = $('#total').val();
+							$('#total').val(oldTotal - product.price);
 							$(this).parent().parent().remove();
 						}}))
 				).appendTo('#product-list');
-				var oldTotal = $('#total').text();
-				$('#total').text((oldTotal - 0) + (product.price - 0));
+				var oldTotal = $('#total').val();
+				$('#total').val((oldTotal - 0) + (product.price - 0));
 			});
 	});
 	

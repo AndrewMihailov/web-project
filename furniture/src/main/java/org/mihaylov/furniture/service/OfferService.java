@@ -14,32 +14,52 @@ public class OfferService {
 
 	@Autowired
 	private OfferDao offerDao;
-	
+
 	@Transactional
 	public void save(Offer offer) {
 		offerDao.save(offer);
 	}
-	
+
 	@Transactional
 	public List<Offer> list() {
 		return offerDao.list();
 	}
-	
+
 	@Transactional
 	public List<Offer> list(Locale locale) {
 		return offerDao.selectByLocale(locale.toString());
 	}
+
+	@Transactional
+	public Integer count(Locale locale) {
+		return offerDao.count(locale.toString());
+	}
+
+	@Transactional
+	public Integer count() {
+		return offerDao.count();
+	}
 	
+	@Transactional
+	public List<Offer> list(Integer first, Integer limit) {
+		return offerDao.list(first, limit == null ? 5 : limit);
+	}
+
+	@Transactional
+	public List<Offer> list(Integer first, Integer limit, Locale locale) {
+		return offerDao.selectDiapasonByLocale(first, limit, locale.toString());
+	}
+
 	@Transactional
 	public void delete(Integer id) {
 		offerDao.delete(offerDao.load(id));
 	}
-	
+
 	@Transactional
 	public void update(Offer offer) {
 		offerDao.update(offer);
 	}
-	
+
 	@Transactional
 	public Offer load(Integer id) {
 		return offerDao.load(id);

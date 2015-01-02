@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.mihaylov.furniture.entity.Product;
 import org.mihaylov.furniture.service.PhotoService;
 import org.mihaylov.furniture.service.ProductService;
+import org.mihaylov.furniture.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,35 +36,18 @@ public class ProductController extends UserCommon {
 		init(model);
 		
 		List<Product> list;
+		Integer cnt = productService.count();
 		
 		if (id == null)
-			list = productService.list();
+			list = productService.list(PaginationUtils.getStart(page, PaginationUtils.PRODUCTS_PERPAGE, cnt),
+					PaginationUtils.PRODUCTS_PERPAGE);
 		else
-			list = productService.searchByCategoryId(id);
+			list = productService.searchByCategoryId(id,
+					PaginationUtils.getStart(page, PaginationUtils.PRODUCTS_PERPAGE, cnt),
+					PaginationUtils.PRODUCTS_PERPAGE);
 		
-		if (page == null)
-			page = 1;
-		if (perpage == null)
-			perpage = 20;
-	
-		int start = (page - 1) * perpage;
-		if (start > list.size()) {
-			start = 0;
-			page = 1;
-		}
-		int end = start + perpage;
-		if (end > list.size())
-			end = list.size();
-		List<Product> newList = new ArrayList<Product>();
-		for (int i = start; i < end; i++)
-			newList.add(list.get(i));
-		
-		model.addObject("products", newList);
-		model.addObject("curId", id);
-		model.addObject("page", page);
-		model.addObject("perpage", perpage);
-		model.addObject("totalPages", (list.size() - 1) / perpage + 1);
-		
+		PaginationUtils.paginate(model, page, PaginationUtils.PRODUCTS_PERPAGE, cnt, "products", list);
+		model.addObject("currId", id);
 		return model;
 	}
 	

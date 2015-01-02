@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import org.mihaylov.furniture.entity.News;
 import org.mihaylov.furniture.service.NewsService;
+import org.mihaylov.furniture.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,28 +30,9 @@ public class NewsController extends UserCommon {
 		ModelAndView model = new ModelAndView("news");
 		init(model);
 		
-		if (page == null)
-			page = 1;
-		if (perpage == null)
-			perpage = 10;
-	
-		List<News> list = newsService.list(locale);
-		int start = (page - 1) * perpage;
-		if (start > list.size()) {
-			start = 0;
-			page = 1;
-		}
-		int end = start + perpage;
-		if (end > list.size())
-			end = list.size();
-		List<News> newList = new ArrayList<News>();
-		for (int i = start; i < end; i++)
-			newList.add(list.get(i));
-		
-		model.addObject("news", newList);
-		model.addObject("page", page);
-		model.addObject("perpage", perpage);
-		model.addObject("totalPages", (list.size() - 1) / perpage + 1);
+		Integer newsCnt = newsService.count(locale);
+		PaginationUtils.paginate(model, page, perpage, newsCnt,
+				"news", newsService.list(PaginationUtils.getStart(page, perpage, newsCnt), PaginationUtils.PERPAGE, locale));
 		return model;
 	}
 

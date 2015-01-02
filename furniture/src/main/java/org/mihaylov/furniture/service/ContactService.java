@@ -31,8 +31,28 @@ public class ContactService {
 	}
 	
 	@Transactional
+	public List<Contact> list(Integer first, Integer limit) {
+		return contactDao.list(first, limit == null ? 5 : limit);
+	}
+	
+	@Transactional
+	public Integer count() {
+		return contactDao.count();
+	}
+	
+	@Transactional
 	public List<Contact> list(Locale locale) {
 		return contactDao.selectByLocale(locale.toString());
+	}
+	
+	@Transactional
+	public Integer count(Locale locale) {
+		return contactDao.count(locale.toString());
+	}
+	
+	@Transactional
+	public List<Contact> list(Integer first, Integer limit, Locale locale) {
+		return contactDao.selectDiapasonByLocale(first, limit, locale.toString());
 	}
 	
 	@Transactional

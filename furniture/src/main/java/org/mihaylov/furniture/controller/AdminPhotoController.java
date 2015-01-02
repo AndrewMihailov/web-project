@@ -13,6 +13,7 @@ import org.mihaylov.furniture.entity.Product;
 import org.mihaylov.furniture.service.CategoryService;
 import org.mihaylov.furniture.service.PhotoService;
 import org.mihaylov.furniture.service.ProductService;
+import org.mihaylov.furniture.utils.PaginationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +44,21 @@ public class AdminPhotoController extends AdminCommon {
 			.getLogger(AdminPhotoController.class);
 
 	@RequestMapping(value = "/photo-editor", method = RequestMethod.GET)
-	public ModelAndView photoEditor(@RequestParam(required = false) Integer id) {
+	public ModelAndView photoEditor(@RequestParam(required = false) Integer id,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "perpage", required = false) Integer perpage) {
 		ModelAndView model = new ModelAndView("admin/photo_editor");
 		init(model);
 
 		/*model.addObject("groupedProducts",
 				productService.listGrouppedProducts());*/
-		model.addObject("photos", photoService.list());
-		model.addObject("categories", categoryService.list());
+		
+		
+		Integer cnt = photoService.count();
+		PaginationUtils.paginate(model, page, perpage, cnt, "photos",
+				photoService.list(PaginationUtils.getStart(page, perpage, photoService.count()), perpage));
+		//model.addObject("photos", photoService.list());
+		model.addObject("categories", categoryService.listOrganized());
 
 		if (id != null) {
 			model.addObject("edit", true);

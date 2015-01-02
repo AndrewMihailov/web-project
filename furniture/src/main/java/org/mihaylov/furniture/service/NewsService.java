@@ -18,12 +18,12 @@ public class NewsService {
 
 	@Autowired
 	private NewsDao newsDao;
-	
+
 	@Transactional
 	public void save(News news) {
 		newsDao.save(news);
 	}
-	
+
 	@Transactional
 	public void save(News news, MultipartFile image) throws IOException {
 		if (!image.isEmpty())
@@ -36,26 +36,46 @@ public class NewsService {
 	public List<News> list() {
 		return newsDao.list();
 	}
-	
+
+	@Transactional
+	public List<News> list(Integer first, Integer limit) {
+		return newsDao.list(first, limit == null ? 5 : limit);
+	}
+
+	@Transactional
+	public Integer count(Locale locale) {
+		return newsDao.count(locale.toString());
+	}
+
+	@Transactional
+	public Integer count() {
+		return newsDao.count();
+	}
+
 	@Transactional
 	public List<News> list(Locale locale) {
 		return newsDao.selectByLocale(locale.toString());
 	}
 
 	@Transactional
+	public List<News> list(Integer first, Integer limit, Locale locale) {
+		return newsDao.selectDiapasonByLocale(first, limit, locale.toString());
+	}
+
+	@Transactional
 	public void delete(Integer id) {
 		newsDao.delete(newsDao.load(id));
 	}
-	
+
 	public News load(Integer id) {
 		return newsDao.load(id);
 	}
-	
+
 	@Transactional
 	public void update(News news) {
 		newsDao.update(news);
 	}
-	
+
 	@Transactional
 	public void update(News news, MultipartFile image, String oldImg)
 			throws IOException {
@@ -66,7 +86,7 @@ public class NewsService {
 		news.setDate(new Date(new java.util.Date().getTime()));
 		newsDao.update(news);
 	}
-	
+
 	private String saveImage(MultipartFile file) throws IOException {
 		return FileSystemUtils.saveMultipart(file, "news");
 	}

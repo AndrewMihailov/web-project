@@ -15,7 +15,7 @@
 	<ul id="menu">
 		<li><a href="/furniture/"><spring:message code="menu.home" /></a></li>
 		<li><a href="/furniture/news"><spring:message code="menu.news" /></a></li>
-		<li><a href="/furniture/"><spring:message code="menu.about" /></a>
+		<li><a><spring:message code="menu.about" /></a>
 			<ul>
 				<li><a href="/furniture/offers"><spring:message code="menu.offers" /></a></li>
 				<li><a href="/furniture/contacts"><spring:message code="menu.contacts" /></a></li>
@@ -27,7 +27,10 @@
 				<c:forEach var="i" items="${menuCategories}">
 					<li>
 						<c:set var="catName" value="${pageContext.response.locale eq \"ru\" ? i.key.nameRu : i.key.nameEn}" />
-						<a href="/furniture/products?id=${i.key.id}">${catName}</a>
+						<c:if test="${i.key eq null}">
+							<c:set var="catName" value="${pageContext.response.locale eq \"ru\"?\"Корень\":\"Root\"}" />
+						</c:if>
+						<a <%-- href="/furniture/products?id=${i.key.id}" --%>>${catName}</a>
 						<c:if test="${i.value.size() > 0}">
 							<ul>
 								<c:forEach var="j" items="${i.value}">

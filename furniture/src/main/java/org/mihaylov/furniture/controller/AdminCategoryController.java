@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.mihaylov.furniture.entity.Category;
 import org.mihaylov.furniture.service.CategoryService;
+import org.mihaylov.furniture.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,10 +21,18 @@ public class AdminCategoryController extends AdminCommon {
 	private CategoryService categoryService;
 	
 	@RequestMapping(value = "/category-editor", method = RequestMethod.GET)
-	public ModelAndView categoryEditor(@RequestParam(required=false) Integer id) {
+	public ModelAndView categoryEditor(@RequestParam(required=false) Integer id,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "perpage", required = false) Integer perpage) {
 		ModelAndView model = new ModelAndView("admin/category_editor");
-		model.addObject("categories", categoryService.list());
+		
+		Integer cnt = categoryService.count();
+		PaginationUtils.paginate(model, page, perpage, cnt, "categories",
+				categoryService.list(PaginationUtils.getStart(page, perpage, categoryService.count()), perpage));
+		//model.addObject("categories", categoryService.list());
 		init(model);
+		
+		model.addObject("categoryList", categoryService.listOrganized());
 		
 		if (id != null) {
 			model.addObject("edit", true);
